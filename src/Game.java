@@ -20,13 +20,15 @@ public class Game extends JFrame {
 	public static Timer timer;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
-		public static float GRAPHICS_SCALE_FACTOR = 2f;
+		public static float GRAPHICS_SCALE_FACTOR = 3f;
+		public static int TILE_SIZE = 50;
 		/////
 	public static ArrayList<Object> allComponents = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
 		public static List<Tile> tiles = new ArrayList<Tile>();
 	///
 	public static Player player;
+	public static Map map;
 	
 	public Game() {
 		Game.instances++;
@@ -44,6 +46,8 @@ public class Game extends JFrame {
 		 * 
 		 */
 		createComponents();
+		
+		map = new Map();
 		
 		
 	}
@@ -95,7 +99,7 @@ public class Game extends JFrame {
 		return false;
 	}
 	
-	private void addNewInstance(Object o) {
+	public static void addNewInstance(Object o) {
 		if(o instanceof Paintable) {
 			paintableObjects.add((Paintable) o);
 		}
