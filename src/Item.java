@@ -30,6 +30,7 @@ public class Item implements Paintable {
 	}
 
 	private void setHitbox() {
+		System.out.println(name);
 		hitbox = new Rectangle((int)(ResourceHandler.getImageFromKey(name).getWidth()*Game.GRAPHICS_SCALE_FACTOR), (int)(ResourceHandler.getImageFromKey(name).getHeight()*Game.GRAPHICS_SCALE_FACTOR));
 	}
 	private void updateHitbox() {
