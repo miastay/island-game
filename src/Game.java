@@ -97,7 +97,7 @@ public class Game extends JFrame {
             TimeUnit.MILLISECONDS.sleep(1);
         } 
         catch (Exception e){
-            System.out.println("sucks");
+        	e.printStackTrace();
         }
         
         toolkit.sync();

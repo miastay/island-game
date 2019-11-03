@@ -50,7 +50,6 @@ public class Map implements Paintable {
 			}
 			csvReader.close();
 		} catch(Exception e) {
-			System.out.println("sucks");
 			e.printStackTrace();
 		}
 		
