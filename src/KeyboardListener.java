@@ -45,12 +45,12 @@ public class KeyboardListener {
         });
     }
     
-    public void AddKey(int keyCode){
+    public void addKey(int keyCode){
         activeKeys.add(keyCode);
         keysDown.put(keyCode, false);
     }
     
-    public boolean GetKey(int keyCode){
+    public boolean getKey(int keyCode){
         return keysDown.get(keyCode);
     }
 }

@@ -53,11 +53,6 @@ public class Game extends JFrame {
 		createComponents();
 		
 	}
-	public void updateState() {
-		update(getGraphics());
-		updateVars();
-	}
-	
 	
 	private void updateVars() {
 		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
@@ -89,7 +84,7 @@ public class Game extends JFrame {
 		}
 		
                 
-                FRAME++;
+                updateVars();
                 deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
                 lastFrameMillis = System.currentTimeMillis();
                 try{
