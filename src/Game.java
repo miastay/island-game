@@ -25,8 +25,8 @@ public class Game extends JFrame {
 	public static long lastFrameMillis;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
-		public static float GRAPHICS_SCALE_FACTOR = 1f;
-		public static int TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
+		//public static float GRAPHICS_SCALE_FACTOR = 1f;
+		public static int TILE_PIXELS = 50;
 		/////
 	public static ArrayList<Object> allComponents = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
@@ -61,7 +61,7 @@ public class Game extends JFrame {
 	}
 	
 	private void updateVars() {
-		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
+		TILE_PIXELS = 50;
         deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
         lastFrameMillis = System.currentTimeMillis();
 		FRAME++;
@@ -75,7 +75,7 @@ public class Game extends JFrame {
 		 * Create all components
 		 */
 			addNewInstance(new Item("crystal", 5, 5));
-			player = new Player("crystal", 65, 110); 
+			player = new Player("crystal", 1, 1);
 			addNewInstance(player);
 	}
 	public void paint(Graphics G) {
@@ -94,7 +94,7 @@ public class Game extends JFrame {
                 
         updateVars();
         try{
-            TimeUnit.MILLISECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(10);
         } 
         catch (Exception e){
         	e.printStackTrace();
