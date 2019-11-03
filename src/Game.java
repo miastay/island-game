@@ -39,6 +39,7 @@ public class Game extends JFrame {
 		Game.objects++;
 		setSize(1200, 700); 
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		map = new Map();
 		
