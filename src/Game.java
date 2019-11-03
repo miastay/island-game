@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 public class Game extends JFrame implements KeyListener {
 
-	public static int instances;
+	public static int objects;
 	public static int FRAME;
 	public static Timer timer;
 	public static ResourceHandler resGrab;
@@ -32,7 +32,7 @@ public class Game extends JFrame implements KeyListener {
 		public static File mapLocation = new File("./res/defaultmap.csv");
 	
 	public Game() {
-		Game.instances++;
+		Game.objects++;
 		setSize(1200, 700); 
 		setVisible(true);
 		
@@ -81,7 +81,7 @@ public class Game extends JFrame implements KeyListener {
 	public void paint(Graphics G) {
 //		G.clearRect(0, 0, 1200, 700);
 		G.setColor(Color.BLUE);
-		G.drawString(instances + "", 50, 50);
+		G.drawString(objects + "", 50, 50);
 		
 		map.draw(G);
 		

@@ -15,7 +15,7 @@ public class Character implements Paintable, Animatable {
 
 	public Character(String name ) {
 		this.name = name;
-		Game.instances++;
+		Game.objects++;
 	}
 	@Override
 	public void draw(Graphics G) {

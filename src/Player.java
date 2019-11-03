@@ -20,13 +20,13 @@ public class Player implements Paintable {
 	public Player(String name) {
 		this.name = name;
 		setHitbox();
-		Game.instances++;
+		Game.objects++;
 	}
 	public Player(String name, int x, int y) {
 		this.name = name;
 		setHitbox();
 		setX(x); setY(y);
-		Game.instances++;
+		Game.objects++;
 	}
 	
 	private void setHitbox() {

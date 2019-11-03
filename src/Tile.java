@@ -23,14 +23,14 @@ public class Tile implements Paintable, Animatable {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		Game.instances++;
+		Game.objects++;
 		type = Type.STATIC;
 	}
 	public Tile(String[] names, int x, int y) {
 		this.frames = names;
 		this.x = x;
 		this.y = y;
-		Game.instances++;
+		Game.objects++;
 		type = Type.ANIMATED;
 	}
 	@Override
