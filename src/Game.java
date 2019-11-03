@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements KeyListener {
 
 	public static int instances;
 	public static int FRAME;
 	public static Timer timer;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
-		public static float GRAPHICS_SCALE_FACTOR = 11f;
-		public static int TILE_SIZE = (int) (10 * GRAPHICS_SCALE_FACTOR);
+		public static float GRAPHICS_SCALE_FACTOR = 2f;
+		public static int TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
 		/////
 	public static ArrayList<Object> allComponents = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
@@ -29,11 +29,14 @@ public class Game extends JFrame {
 	///
 	public static Player player;
 	public static Map map;
+		public static File mapLocation = new File("./res/defaultmap.csv");
 	
 	public Game() {
 		Game.instances++;
 		setSize(1200, 700); 
 		setVisible(true);
+		
+		map = new Map();
 		
 		timer = new Timer();
 		timer.schedule(new RunTimer(), 5);
@@ -47,8 +50,7 @@ public class Game extends JFrame {
 		 */
 		createComponents();
 		
-		map = new Map();
-		
+		this.addKeyListener(this);
 		
 	}
 	private void createComponents() {
@@ -76,7 +78,7 @@ public class Game extends JFrame {
 		for(Paintable obj : paintableObjects) {
 			obj.draw(G);
 		}
-		
+		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
 	}
 	
 	public class RunTimer extends TimerTask {
@@ -111,6 +113,21 @@ public class Game extends JFrame {
 		if(o instanceof Tile) {
 			tiles.add((Tile) o);
 		}
+	}
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		GRAPHICS_SCALE_FACTOR += 0.2;
+	}
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

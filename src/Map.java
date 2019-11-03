@@ -11,7 +11,7 @@ public class Map implements Paintable {
 	File location;
 	
 	public Map() {
-		location = new File("./res/defaultmap.csv");
+		location = Game.mapLocation;
 		readMapFromCSV();
 	}
 
