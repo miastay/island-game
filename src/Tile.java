@@ -51,6 +51,8 @@ public class Tile implements Paintable, Animatable {
                         }
                     
 			img = ResourceHandler.getImageFromKey(frames[currentFrame]);
+			if(img == null)
+				System.out.println("Image not found");
 			Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
 		} else {
 			img = ResourceHandler.getImageFromKey(name);

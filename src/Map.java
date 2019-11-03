@@ -38,7 +38,7 @@ public class Map implements Paintable {
 			    for(int i = 0; i < data.length; i++) {
 			    	Tile t;
 			    	if(data[i].equals("water")) {
-			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9"};
+			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9","water10","water11","water12","water13","water14","water15","water16"};
 			    		t = new Tile(s, i, j, 5);
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j);
@@ -50,7 +50,6 @@ public class Map implements Paintable {
 			}
 			csvReader.close();
 		} catch(Exception e) {
-			System.out.println("sucks");
 			e.printStackTrace();
 		}
 		
