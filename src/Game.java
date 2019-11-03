@@ -89,18 +89,18 @@ public class Game extends JFrame {
 		}
 		
                 
-        FRAME++;
-        deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
-        lastFrameMillis = System.currentTimeMillis();
-        try{
-                TimeUnit.MILLISECONDS.sleep(50);
-        } 
-        catch (Exception e){
-            System.out.println("sucks");
-        }
-        
-        toolkit.sync();
-        repaint();
+                FRAME++;
+                deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
+                lastFrameMillis = System.currentTimeMillis();
+                try{
+                        TimeUnit.MILLISECONDS.sleep(50);
+                } 
+                catch (Exception e){
+                    System.out.println("sucks");
+                }
+                
+                toolkit.sync();
+                repaint();
 	}
 
 	public static boolean detectItemPlayerCollision(Rectangle2D hitbox) {
