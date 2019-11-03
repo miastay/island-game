@@ -20,7 +20,7 @@ public class ResourceHandler {
 	
 	public ResourceHandler( ) {
 		this.source = new File("./res/");
-		this.resnames = new File("./res/names.csv");
+		this.resnames = new File("./res/filenames.csv");
 		extractImages();
 	}
 	
