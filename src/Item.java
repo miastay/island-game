@@ -32,11 +32,15 @@ public class Item implements Paintable {
 	private void setHitbox() {
 		hitbox = new Rectangle((int)(ResourceHandler.getImageFromKey(name).getWidth()*Game.GRAPHICS_SCALE_FACTOR), (int)(ResourceHandler.getImageFromKey(name).getHeight()*Game.GRAPHICS_SCALE_FACTOR));
 	}
+	private void updateHitbox() {
+		hitbox.setRect(x*Game.TILE_SIZE, y*Game.TILE_SIZE, hitbox.getWidth()*Game.GRAPHICS_SCALE_FACTOR, hitbox.getHeight()*Game.GRAPHICS_SCALE_FACTOR);
+	}
 	@Override
 	public void draw(Graphics G) {
 		BufferedImage img = ResourceHandler.getImageFromKey(name);
-		G.drawImage(img, x, y, (x + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
+		G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
 		if(renderHitbox) { 
+			updateHitbox();
 			G.setColor(Color.orange);
 			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		}

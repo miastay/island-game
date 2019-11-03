@@ -20,7 +20,7 @@ public class Game extends JFrame implements KeyListener {
 	public static Timer timer;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
-		public static float GRAPHICS_SCALE_FACTOR = 2f;
+		public static float GRAPHICS_SCALE_FACTOR = 1f;
 		public static int TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
 		/////
 	public static ArrayList<Object> allComponents = new ArrayList<>();
@@ -39,7 +39,8 @@ public class Game extends JFrame implements KeyListener {
 		map = new Map();
 		
 		timer = new Timer();
-		timer.schedule(new RunTimer(), 5);
+//		timer.schedule(new RunTimer(), 5);
+		//new code will updateState() periodically
 		
 		resGrab = new ResourceHandler();
 		
@@ -53,6 +54,16 @@ public class Game extends JFrame implements KeyListener {
 		this.addKeyListener(this);
 		
 	}
+	public void updateState() {
+		update(getGraphics());
+		updateVars();
+	}
+	
+	
+	private void updateVars() {
+		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
+		FRAME++;
+	}
 	private void createComponents() {
 		//fill in whole list
 		allComponents.add(items);
@@ -61,14 +72,13 @@ public class Game extends JFrame implements KeyListener {
 		/*
 		 * Create all components
 		 */
-			addNewInstance(new Item("Crystal", 100, 100));
+			addNewInstance(new Item("Crystal", 5, 5));
 			player = new Player("Crystal", 65, 110);
 			addNewInstance(player);
 			String[] s = {"water1", "water2", "water3"};
 			addNewInstance(new Tile(s, 100, 100));
 	}
 	public void paint(Graphics G) {
-		
 //		G.clearRect(0, 0, 1200, 700);
 		G.setColor(Color.BLUE);
 		G.drawString(instances + "", 50, 50);
@@ -78,14 +88,14 @@ public class Game extends JFrame implements KeyListener {
 		for(Paintable obj : paintableObjects) {
 			obj.draw(G);
 		}
-		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
+		
 	}
 	
 	public class RunTimer extends TimerTask {
 		@Override
 		public void run() {
 			repaint();
-			FRAME++;
+
 			timer.schedule(new RunTimer(), 500);
 		}
 	}
@@ -117,7 +127,14 @@ public class Game extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		GRAPHICS_SCALE_FACTOR += 0.2;
+		switch(arg0.getKeyChar()) {
+		//don't break
+		case 'a' :
+			GRAPHICS_SCALE_FACTOR += 0.2;
+		default :
+			updateState();
+		}
+		
 	}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
