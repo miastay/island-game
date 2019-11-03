@@ -14,8 +14,8 @@ public class Tile implements Paintable, Animatable {
 	public final Type type;
 	private boolean showFrame = true;
 
-	int getX() {return x;}
-	int getY() {return y;}
+	float getX() {return x;}
+	float getY() {return y;}
 	
 	public enum Type {
 		ANIMATED,
@@ -51,23 +51,23 @@ public class Tile implements Paintable, Animatable {
                         }
                     
 			img = ResourceHandler.getImageFromKey(frames[currentFrame]);
-			Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
+			Game.renderer.addSprite(img, x, y, 1, 0);
 		} else {
 			img = ResourceHandler.getImageFromKey(name);
 				if(img == null)
 					System.out.println("Image not found");
-				Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
+				Game.renderer.addSprite(img, x, y, 1, 0);
 		}
 		if(showFrame) {
 			G.setColor(Color.GREEN);
-			G.drawRect(x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE);
+			G.drawRect(x, y, Game.TILE_PIXELS, Game.TILE_PIXELS);
 		}
 	}
 	@Override
 	public void animate(Graphics G) {
 		// TODO Auto-generated method stub
 		BufferedImage img = ResourceHandler.getImageFromKey(frames[Game.FRAME % (frames.length)]);
-		Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
+		Game.renderer.addSprite(img, x, y, 1, 0);
 	}
 	
 }

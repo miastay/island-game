@@ -22,8 +22,9 @@ public class ScreenRenderer {
 		queue = new SpritePriotityQueue();
 	}
 	
-	void addSprite(BufferedImage img, int x, int y, float scale, int layer) {
-		queue.Queue(new Sprite(img, x, y, scale), layer);
+	void addSprite(BufferedImage img, float x, float y, float scale, int layer) {
+		
+		queue.Queue(new Sprite(img, x * Game.TILE_PIXELS, y * Game.TILE_PIXELS, scale), layer);
 	}
 	
 	BufferedImage outputFrame() {
@@ -33,7 +34,7 @@ public class ScreenRenderer {
 	}
 	
 	void renderSprites() {
-		while(queue.sprites.size() != 0) {
+		while(!queue.sprites.isEmpty()) {
 			Sprite currentSprite = queue.Dequeue();
 			Raster spriteData = currentSprite.image.getData();
 			frameRaster.setRect((int)currentSprite.x, (int)currentSprite.y, spriteData);

@@ -37,7 +37,7 @@ public class ResourceHandler {
 			}
 			csvReader.close();
 		} catch(Exception e) {
-			System.out.println("sucks");
+			System.out.println("sucks1");
 			e.printStackTrace();
 		}
 		
