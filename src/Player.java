@@ -35,7 +35,7 @@ public class Player implements Paintable {
 	@Override
 	public void draw(Graphics G) {
 		BufferedImage img = ResourceHandler.getImageFromKey(name);
-		G.drawImage(img, x, y, (x + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
+		Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 1);
 		if(renderHitbox) {
 			G.setColor(Color.BLUE);
 			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());

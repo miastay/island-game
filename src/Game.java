@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.*;
@@ -36,6 +37,7 @@ public class Game extends JFrame {
 		public static File mapLocation = new File("./res/defaultmap.csv");
 		
 	public static KeyboardListener keylist = new KeyboardListener();
+	public static ScreenRenderer renderer = new ScreenRenderer();
 	
 	public Game() {
 		Game.objects++;
@@ -48,6 +50,7 @@ public class Game extends JFrame {
 		
 		
 		resGrab = new ResourceHandler();
+		
 		
 		/*
 		 * 
@@ -77,7 +80,7 @@ public class Game extends JFrame {
 			addNewInstance(new Tile(s, 100, 100, 2));
 	}
 	public void paint(Graphics G) {
-//		G.clearRect(0, 0, 1200, 700);
+		renderer.newFrame();
 		G.setColor(Color.BLUE);
 		G.drawString(objects + "", 50, 50);
 		
@@ -87,19 +90,21 @@ public class Game extends JFrame {
 			obj.draw(G);
 		}
 		
+		BufferedImage frame = renderer.outputFrame();
+		G.drawImage(frame, 0, 0, null);
                 
-                updateVars();
-                deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
-                lastFrameMillis = System.currentTimeMillis();
-                try{
-                        TimeUnit.MILLISECONDS.sleep(50);
-                } 
-                catch (Exception e){
-                    System.out.println("sucks");
-                }
-                
-                toolkit.sync();
-                repaint();
+        updateVars();
+        deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
+        lastFrameMillis = System.currentTimeMillis();
+        try{
+            TimeUnit.MILLISECONDS.sleep(50);
+        } 
+        catch (Exception e){
+            System.out.println("sucks");
+        }
+        
+        toolkit.sync();
+        repaint();
 	}
 
 	public static boolean detectItemPlayerCollision(Rectangle2D hitbox) {

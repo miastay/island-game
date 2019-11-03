@@ -68,7 +68,7 @@ public class Tile implements Paintable, Animatable {
 	public void animate(Graphics G) {
 		// TODO Auto-generated method stub
 		BufferedImage img = ResourceHandler.getImageFromKey(frames[Game.FRAME % (frames.length)]);
-		G.drawImage(img, x, y, (x + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
+		Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
 	}
 	
 }
