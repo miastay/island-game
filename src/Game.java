@@ -20,8 +20,8 @@ public class Game extends JFrame {
 	public static Timer timer;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
-		public static float GRAPHICS_SCALE_FACTOR = 3f;
-		public static int TILE_SIZE = 50;
+		public static float GRAPHICS_SCALE_FACTOR = 11f;
+		public static int TILE_SIZE = (int) (10 * GRAPHICS_SCALE_FACTOR);
 		/////
 	public static ArrayList<Object> allComponents = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
@@ -67,7 +67,7 @@ public class Game extends JFrame {
 	}
 	public void paint(Graphics G) {
 		
-		G.clearRect(0, 0, 1200, 700);
+//		G.clearRect(0, 0, 1200, 700);
 		G.setColor(Color.BLUE);
 		G.drawString(instances + "", 50, 50);
 		

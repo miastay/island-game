@@ -42,6 +42,7 @@ public class Tile implements Paintable, Animatable {
 			BufferedImage img = ResourceHandler.getImageFromKey(name);
 				if(img == null)
 					System.out.println("Image not found");
+			
 			G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x*Game.TILE_SIZE + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y*Game.TILE_SIZE + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
 			if(showFrame) {
 				G.setColor(Color.GREEN);
