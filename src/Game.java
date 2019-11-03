@@ -34,6 +34,8 @@ public class Game extends JFrame {
 	public static Player player;
 	public static Map map;
 		public static File mapLocation = new File("./res/defaultmap.csv");
+		
+	public static KeyboardListener keylist = new KeyboardListener();
 	
 	public Game() {
 		Game.objects++;
