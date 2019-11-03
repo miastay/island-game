@@ -61,6 +61,8 @@ public class Game extends JFrame {
 	
 	private void updateVars() {
 		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
+        deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
+        lastFrameMillis = System.currentTimeMillis();
 		FRAME++;
 	}
 	private void createComponents() {
@@ -92,9 +94,8 @@ public class Game extends JFrame {
 		G.drawImage(frame, 0, 0, null);
                 
         updateVars();
-        deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
         try{
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MILLISECONDS.sleep(1);
         } 
         catch (Exception e){
             System.out.println("sucks");
