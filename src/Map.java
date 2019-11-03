@@ -39,7 +39,7 @@ public class Map implements Paintable {
 			    	Tile t;
 			    	if(data[i].equals("water")) {
 			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9"};
-			    		t = new Tile(s, i, j, 5);
+			    		t = new Tile(s, i, j, 2);
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j);
 			    	}
