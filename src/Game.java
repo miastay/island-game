@@ -41,15 +41,13 @@ public class Game extends JFrame {
 	
 	public Game() {
 		Game.objects++;
+		resGrab = new ResourceHandler();
 		setSize(1200, 700); 
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		map = new Map();
-		
-		
-		resGrab = new ResourceHandler();
 		
 		
 		/*
@@ -95,7 +93,6 @@ public class Game extends JFrame {
                 
         updateVars();
         deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
-        lastFrameMillis = System.currentTimeMillis();
         try{
             TimeUnit.MILLISECONDS.sleep(50);
         } 

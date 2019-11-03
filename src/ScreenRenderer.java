@@ -27,6 +27,7 @@ public class ScreenRenderer {
 	}
 	
 	BufferedImage outputFrame() {
+		renderSprites();
 		currentFrame = new BufferedImage(ColorModel.getRGBdefault(), frameRaster, ColorModel.getRGBdefault().isAlphaPremultiplied(), null);
 		return currentFrame;
 	}
