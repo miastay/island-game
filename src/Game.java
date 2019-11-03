@@ -48,7 +48,7 @@ public class Game extends JFrame {
 		
 		
 		map = new Map();
-		
+		 
 		
 		/*
 		 * 
@@ -76,8 +76,6 @@ public class Game extends JFrame {
 			addNewInstance(new Item("Crystal", 5, 5));
 			player = new Player("Crystal", 65, 110);
 			addNewInstance(player);
-			String[] s = {"water1", "water2", "water3"};
-			addNewInstance(new Tile(s, 100, 100, 2));
 	}
 	public void paint(Graphics G) {
 		renderer.newFrame();
