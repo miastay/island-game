@@ -130,7 +130,7 @@ public class Game extends JFrame implements KeyListener {
 		switch(arg0.getKeyChar()) {
 		//don't break
 		case 'a' :
-			GRAPHICS_SCALE_FACTOR += 0.2;
+			GRAPHICS_SCALE_FACTOR += 0.05;
 		default :
 			updateState();
 		}
