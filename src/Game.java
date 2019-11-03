@@ -55,6 +55,7 @@ public class Game extends JFrame {
 		 * 
 		 */
 		createComponents();
+		keylist.StartKeyListener();
 		
 	}
 	

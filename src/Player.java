@@ -1,7 +1,8 @@
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -21,14 +22,19 @@ public class Player implements Paintable {
 		this.name = name;
 		setHitbox();
 		Game.objects++;
+		instantiateKeys();
 	}
+	
 	public Player(String name, int x, int y) {
 		this.name = name;
 		setHitbox();
 		setX(x); setY(y);
 		Game.objects++;
+		instantiateKeys();
 	}
-	
+	private void instantiateKeys() {
+		Game.keylist.activeKeys.add(KeyEvent.VK_A);
+	}
 	private void setHitbox() {
 		hitbox = new Rectangle((int)(ResourceHandler.getImageFromKey(name).getWidth()*Game.GRAPHICS_SCALE_FACTOR), (int)(ResourceHandler.getImageFromKey(name).getHeight()*Game.GRAPHICS_SCALE_FACTOR));
 	}
@@ -39,6 +45,9 @@ public class Player implements Paintable {
 		if(renderHitbox) {
 			G.setColor(Color.BLUE);
 			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
+		}
+		if(Game.keylist.getKey(KeyEvent.VK_A)) {
+			System.out.println("funky");
 		}
 	}
 }
