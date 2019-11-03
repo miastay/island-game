@@ -7,11 +7,11 @@ import javax.imageio.ImageIO;
 
 public class Map implements Paintable {
 	
-	public static Tile[][] array = new Tile[4][4];
+	public static Tile[][] array = new Tile[26][26];
 	File location;
 	
 	public Map() {
-		location = new File("./res/default-map.csv");
+		location = new File("./res/defaultmap.csv");
 		readMapFromCSV();
 	}
 
