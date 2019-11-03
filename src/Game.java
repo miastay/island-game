@@ -12,12 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.Toolkit;
+import java.util.concurrent.TimeUnit;
 
-public class Game extends JFrame implements KeyListener {
+public class Game extends JFrame {
 
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
 	public static int objects;
 	public static int FRAME;
-	public static Timer timer;
+        public static float deltaTime;
+	public static long lastFrameMillis;
 	public static ResourceHandler resGrab;
 	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
 		public static float GRAPHICS_SCALE_FACTOR = 1f;
@@ -38,9 +42,6 @@ public class Game extends JFrame implements KeyListener {
 		
 		map = new Map();
 		
-		timer = new Timer();
-//		timer.schedule(new RunTimer(), 5);
-		//new code will updateState() periodically
 		
 		resGrab = new ResourceHandler();
 		
@@ -50,8 +51,6 @@ public class Game extends JFrame implements KeyListener {
 		 * 
 		 */
 		createComponents();
-		
-		this.addKeyListener(this);
 		
 	}
 	public void updateState() {
@@ -76,7 +75,7 @@ public class Game extends JFrame implements KeyListener {
 			player = new Player("Crystal", 65, 110);
 			addNewInstance(player);
 			String[] s = {"water1", "water2", "water3"};
-			addNewInstance(new Tile(s, 100, 100));
+			addNewInstance(new Tile(s, 100, 100, 2));
 	}
 	public void paint(Graphics G) {
 //		G.clearRect(0, 0, 1200, 700);
@@ -89,15 +88,19 @@ public class Game extends JFrame implements KeyListener {
 			obj.draw(G);
 		}
 		
-	}
-	
-	public class RunTimer extends TimerTask {
-		@Override
-		public void run() {
-			repaint();
-
-			timer.schedule(new RunTimer(), 500);
-		}
+                
+                FRAME++;
+                deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
+                lastFrameMillis = System.currentTimeMillis();
+                try{
+                        TimeUnit.MILLISECONDS.sleep(50);
+                } 
+                catch (Exception e){
+                    System.out.println("sucks");
+                }
+                
+                toolkit.sync();
+                repaint();
 	}
 
 	public static boolean detectItemPlayerCollision(Rectangle2D hitbox) {
@@ -124,27 +127,4 @@ public class Game extends JFrame implements KeyListener {
 			tiles.add((Tile) o);
 		}
 	}
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		switch(arg0.getKeyChar()) {
-		//don't break
-		case 'a' :
-			GRAPHICS_SCALE_FACTOR += 0.05;
-		default :
-			updateState();
-		}
-		
-	}
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

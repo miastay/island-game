@@ -7,6 +7,9 @@ public class Tile implements Paintable, Animatable {
 	
 	private String name;		//reference for ResourceHandler
 	private String[] frames;	//used for animated tiles
+        private float frameRate;
+        private int currentFrame;
+        private long lastFrameMillis;
 	private final int x, y;
 	public final Type type;
 	private boolean showFrame = true;
@@ -26,19 +29,28 @@ public class Tile implements Paintable, Animatable {
 		Game.objects++;
 		type = Type.STATIC;
 	}
-	public Tile(String[] names, int x, int y) {
+	public Tile(String[] names, int x, int y, float frameRate) {
 		this.frames = names;
 		this.x = x;
 		this.y = y;
 		Game.objects++;
 		type = Type.ANIMATED;
+                                
+                currentFrame = 0;
+                this.frameRate = frameRate;
+                lastFrameMillis = System.currentTimeMillis();
 	}
 	@Override
 	public void draw(Graphics G) {
 		// TODO Auto-generated method stub
 		BufferedImage img;
 		if(type == Type.ANIMATED) {
-			img = ResourceHandler.getImageFromKey(frames[Game.FRAME % (frames.length)]);
+                        if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
+                                currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
+                                lastFrameMillis = System.currentTimeMillis();
+                        }
+                    
+			img = ResourceHandler.getImageFromKey(frames[currentFrame]);
 			G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x*Game.TILE_SIZE + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y*Game.TILE_SIZE + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
 		} else {
 			img = ResourceHandler.getImageFromKey(name);
