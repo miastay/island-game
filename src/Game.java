@@ -71,6 +71,8 @@ public class Game extends JFrame {
 		G.setColor(Color.BLUE);
 		G.drawString(instances + "", 50, 50);
 		
+		map.draw(G);
+		
 		for(Paintable obj : paintableObjects) {
 			obj.draw(G);
 		}

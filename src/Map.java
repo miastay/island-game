@@ -36,8 +36,14 @@ public class Map implements Paintable {
 			    String[] data = line.split(",");
 			    //creates new key from name in first column and path in second
 			    for(int i = 0; i < data.length; i++) {
-			    	Tile t = new Tile(data[i] + "", i, j);
-			    	Game.addNewInstance(t);
+			    	Tile t;
+			    	if(data[i].equals("water")) {
+			    		String[] s = {"water1" , "water2", "water3"};
+			    		t = new Tile(s, i, j);
+			    	} else {
+			    		t = new Tile(data[i] + "", i, j);
+			    	}
+//			    	Game.addNewInstance(t);
 			    	array[i][j] = t;
 			    }
 			    j++;

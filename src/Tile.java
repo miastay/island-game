@@ -36,18 +36,20 @@ public class Tile implements Paintable, Animatable {
 	@Override
 	public void draw(Graphics G) {
 		// TODO Auto-generated method stub
+		BufferedImage img;
 		if(type == Type.ANIMATED) {
-			animate(G);
+			img = ResourceHandler.getImageFromKey(frames[Game.FRAME % (frames.length)]);
+			G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x*Game.TILE_SIZE + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y*Game.TILE_SIZE + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
 		} else {
-			BufferedImage img = ResourceHandler.getImageFromKey(name);
+			img = ResourceHandler.getImageFromKey(name);
 				if(img == null)
 					System.out.println("Image not found");
 			
 			G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x*Game.TILE_SIZE + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y*Game.TILE_SIZE + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
-			if(showFrame) {
-				G.setColor(Color.GREEN);
-				G.drawRect(x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE);
-			}
+		}
+		if(showFrame) {
+			G.setColor(Color.GREEN);
+			G.drawRect(x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE);
 		}
 	}
 	@Override

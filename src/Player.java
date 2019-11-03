@@ -40,7 +40,6 @@ public class Player implements Paintable {
 			G.setColor(Color.BLUE);
 			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		}
-		System.out.println(Game.detectItemCollision(hitbox));
 		if(Game.detectItemCollision(hitbox)) {
 			setX((int)(Math.random()*100));
 			setY((int)(Math.random()*100));
