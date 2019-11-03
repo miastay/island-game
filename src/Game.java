@@ -34,11 +34,15 @@ public class Game extends JFrame {
 	public static Player player;
 	public static Map map;
 		public static File mapLocation = new File("./res/defaultmap.csv");
+		
+	public static KeyboardListener keylist = new KeyboardListener();
 	
 	public Game() {
 		Game.objects++;
 		setSize(1200, 700); 
 		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 		map = new Map();
 		
@@ -53,11 +57,6 @@ public class Game extends JFrame {
 		createComponents();
 		
 	}
-	public void updateState() {
-		update(getGraphics());
-		updateVars();
-	}
-	
 	
 	private void updateVars() {
 		TILE_SIZE = (int) (50 * GRAPHICS_SCALE_FACTOR);
@@ -89,7 +88,7 @@ public class Game extends JFrame {
 		}
 		
                 
-                FRAME++;
+                updateVars();
                 deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
                 lastFrameMillis = System.currentTimeMillis();
                 try{

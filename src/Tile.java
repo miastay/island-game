@@ -12,7 +12,7 @@ public class Tile implements Paintable, Animatable {
         private long lastFrameMillis;
 	private final int x, y;
 	public final Type type;
-	private boolean showFrame = true;
+	private boolean showFrame = false;
 
 	int getX() {return x;}
 	int getY() {return y;}
