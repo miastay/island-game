@@ -33,11 +33,29 @@ public class Player implements Paintable {
 		instantiateKeys();
 	}
 	private void instantiateKeys() {
-		Game.keylist.activeKeys.add(KeyEvent.VK_A);
+		Game.keylist.addKey(KeyEvent.VK_A);
+		Game.keylist.addKey(KeyEvent.VK_S);
+		Game.keylist.addKey(KeyEvent.VK_W);
+		Game.keylist.addKey(KeyEvent.VK_D);
 	}
 	private void setHitbox() {
 		hitbox = new Rectangle((int)(ResourceHandler.getImageFromKey(name).getWidth()*Game.GRAPHICS_SCALE_FACTOR), (int)(ResourceHandler.getImageFromKey(name).getHeight()*Game.GRAPHICS_SCALE_FACTOR));
 	}
+	private void checkKeys() {
+		if(Game.keylist.getKey(KeyEvent.VK_A)) {
+			setX((int)(getX() - (5*Game.deltaTime)));
+		}
+		if(Game.keylist.getKey(KeyEvent.VK_W)) {
+			setY((int)(getY() - (5*Game.deltaTime)));
+		}
+		if(Game.keylist.getKey(KeyEvent.VK_S)) {
+			setY((int)(getY() + 1));
+		}
+		if(Game.keylist.getKey(KeyEvent.VK_D)) {
+			setX((int)(getX() + 1));
+		}
+	}
+	
 	@Override
 	public void draw(Graphics G) {
 		BufferedImage img = ResourceHandler.getImageFromKey(name);
@@ -46,8 +64,6 @@ public class Player implements Paintable {
 			G.setColor(Color.BLUE);
 			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		}
-		if(Game.keylist.getKey(KeyEvent.VK_A)) {
-			System.out.println("funky");
-		}
+		checkKeys();
 	}
 }
