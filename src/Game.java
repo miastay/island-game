@@ -75,7 +75,7 @@ public class Game extends JFrame {
 		 * Create all components
 		 */
 			addNewInstance(new Item("crystal", 5, 5));
-			player = new Player("crystal", 65, 110);
+			player = new Player("crystal", 65, 110); 
 			addNewInstance(player);
 	}
 	public void paint(Graphics G) {
