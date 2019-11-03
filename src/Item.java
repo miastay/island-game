@@ -38,7 +38,7 @@ public class Item implements Paintable {
 	@Override
 	public void draw(Graphics G) {
 		BufferedImage img = ResourceHandler.getImageFromKey(name);
-		G.drawImage(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, (x*Game.TILE_SIZE + (int)(img.getWidth()*Game.GRAPHICS_SCALE_FACTOR)), (y*Game.TILE_SIZE + (int)(img.getHeight()*Game.GRAPHICS_SCALE_FACTOR)), 0, 0, img.getWidth(), img.getHeight(), null);
+		Game.renderer.addSprite(img, x*Game.TILE_SIZE, y*Game.TILE_SIZE, Game.GRAPHICS_SCALE_FACTOR, 0);
 		if(renderHitbox) { 
 			updateHitbox();
 			G.setColor(Color.orange);
