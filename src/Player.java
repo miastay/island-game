@@ -11,7 +11,7 @@ public class Player implements Paintable {
 	private float speed = 3;
 	
 	Rectangle2D hitbox;
-	private boolean renderHitbox = true;
+	private boolean renderHitbox = false;
 	private String name;
 	private Sprite playerSprite;
 	private float x, y;

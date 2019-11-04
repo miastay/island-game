@@ -12,7 +12,13 @@ public class Tile implements Paintable, Animatable {
         private long lastFrameMillis;
 	private final int x, y;
 	public final Type type;
-	private boolean showFrame = true;
+	private boolean showFrame = false;
+	private Contact contactType = Contact.NONE;
+	
+	public static enum Contact {
+		COLLIDE,
+		NONE
+	}
 
 	float getX() {return x;}
 	float getY() {return y;}
@@ -28,6 +34,8 @@ public class Tile implements Paintable, Animatable {
 		this.y = y;
 		Game.objects++;
 		type = Type.STATIC;
+			if(name.contains("tree"))
+				this.contactType = Contact.COLLIDE;
 		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 0);
 		Game.renderer.addSprite(tileSprite);
 	}
@@ -48,12 +56,16 @@ public class Tile implements Paintable, Animatable {
 	@Override
 	public void draw(Graphics G) {
 		// TODO Auto-generated method stub
+		//take this out for lag reduction? :
+			
 		if(type == Type.ANIMATED) {
             if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
                     currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
                     tileSprite.image = ResourceHandler.getImageFromKey(frames[currentFrame]);
                     lastFrameMillis = System.currentTimeMillis();
             }
+		} else {
+			tileSprite.image = ResourceHandler.getImageFromKey(name);
 		}
 		if(showFrame) {
 			G.setColor(Color.GREEN);
