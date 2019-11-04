@@ -42,7 +42,7 @@ public class ScreenRenderer {
 				if(currentSprite.x < tileResX && currentSprite.renderLayer < tileResY) {
 					frameRaster.setRect((int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), spriteData);
 				}
-			}
+			} 
 		}
 		return frameRaster;
 	}
