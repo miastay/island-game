@@ -16,6 +16,8 @@ public class Player implements Paintable {
 	private Sprite playerSprite;
 	private float x, y;
 	
+	public boolean canControl = true;
+	
 	float getX() {return x;}
 	float getY() {return y;}
 	void setX(float x) {this.x = x; hitbox.setRect(this.x, y, hitbox.getWidth(), hitbox.getHeight()); playerSprite.x = x;}
@@ -52,17 +54,19 @@ public class Player implements Paintable {
 		hitbox.setRect(x, y, hitbox.getWidth(), hitbox.getHeight());
 	}
 	private void checkKeys() {
-		if(Game.keylist.getKey(KeyEvent.VK_A)) {
-			setX(getX() - speed * Game.deltaTime);
-		}
-		if(Game.keylist.getKey(KeyEvent.VK_W)) {
-			setY(getY() - speed * Game.deltaTime);
-		}
-		if(Game.keylist.getKey(KeyEvent.VK_S)) {
-			setY(getY() + speed * Game.deltaTime);
-		}
-		if(Game.keylist.getKey(KeyEvent.VK_D)) {
-			setX(getX() + speed * Game.deltaTime);
+		if(canControl) {
+			if(Game.keylist.getKey(KeyEvent.VK_A)) {
+				setX(getX() - speed * Game.deltaTime);
+			}
+			if(Game.keylist.getKey(KeyEvent.VK_W)) {
+				setY(getY() - speed * Game.deltaTime);
+			}
+			if(Game.keylist.getKey(KeyEvent.VK_S)) {
+				setY(getY() + speed * Game.deltaTime);
+			}
+			if(Game.keylist.getKey(KeyEvent.VK_D)) {
+				setX(getX() + speed * Game.deltaTime);
+			}
 		}
 	}
 	

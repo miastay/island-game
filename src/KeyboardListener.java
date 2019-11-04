@@ -40,6 +40,11 @@ public class KeyboardListener {
         keysDown.put(keyCode, false);
     }
     
+    public void removeKey(int keyCode) {
+    	activeKeys.remove(keyCode);
+    	keysDown.remove(keyCode);
+    }
+    
     public boolean getKey(int keyCode){
         return keysDown.get(keyCode);
     }
