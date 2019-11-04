@@ -46,10 +46,10 @@ public class Player implements Paintable {
 	}
 	private void checkKeys() {
 		if(Game.keylist.getKey(KeyEvent.VK_A)) {
-			setX(getX() - (1*Game.deltaTime));
+			setX(getX() - Game.deltaTime);
 		}
 		if(Game.keylist.getKey(KeyEvent.VK_W)) {
-			setY(getY() - (1*Game.deltaTime));
+			setY(getY() - Game.deltaTime);
 		}
 		if(Game.keylist.getKey(KeyEvent.VK_S)) {
 			setY(getY() + 1);

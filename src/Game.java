@@ -1,18 +1,12 @@
 import java.awt.Color; 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.*;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.awt.Toolkit;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +42,6 @@ public class Game extends JFrame {
 		
 		
 		map = new Map();
-		 
 		
 		/*
 		 * 
@@ -78,6 +71,7 @@ public class Game extends JFrame {
 			player = new Player("crystal", 1, 1);
 			addNewInstance(player);
 	}
+	
 	public void paint(Graphics G) {
 		renderer.newFrame();
 		G.setColor(Color.BLUE);
@@ -89,8 +83,7 @@ public class Game extends JFrame {
 			obj.draw(G);
 		}
 		
-		BufferedImage frame = renderer.outputFrame();
-		G.drawImage(frame, 0, 0, null);
+		G.drawImage(renderer.outputFrame(), 0, 0, null);
                 
         updateVars();
         try{
