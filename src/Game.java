@@ -60,7 +60,7 @@ public class Game extends JFrame {
 		TILE_PIXELS = 50;
         deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
         lastFrameMillis = System.currentTimeMillis();
-        framesPerSecond = (int)(deltaTime*1000);
+        framesPerSecond = (int)((1000/deltaTime)/1000);
 		FRAME++;
 	}
 	private void createComponents() {
@@ -77,6 +77,7 @@ public class Game extends JFrame {
 	}
 	
 	public void paint(Graphics G) {
+		
 		G.setColor(Color.BLUE);
 		G.drawString(objects + "", 50, 50);
 		
@@ -86,23 +87,23 @@ public class Game extends JFrame {
 			obj.draw(G);
 		}
 		
+		
 		G.drawImage(renderer.outputAllLayers(), 0, 0, null);
+		
 		G.setColor(Color.RED);
-		
-		
-		
 		if(FRAME % 20 == 1)
 			lastFPS = framesPerSecond;
 		G.drawString(lastFPS + "fps", 150, 40);
 		
         updateVars();
+        /*
         try{
             TimeUnit.MILLISECONDS.sleep(10);
         } 
         catch (Exception e){
         	e.printStackTrace();
         }
-        
+        */
         toolkit.sync();
         repaint();
 	}
