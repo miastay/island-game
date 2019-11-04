@@ -10,7 +10,7 @@ public class ScreenRenderer {
 	public float cameraLocalX;
 	public float cameraLocalY;
 	
-	public int tileResX = 32;
+	public int tileResX = 35;
 	public int tileResY = 18;
 	
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
