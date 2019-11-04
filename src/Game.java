@@ -73,7 +73,6 @@ public class Game extends JFrame {
 	}
 	
 	public void paint(Graphics G) {
-		renderer.newFrame();
 		G.setColor(Color.BLUE);
 		G.drawString(objects + "", 50, 50);
 		
@@ -83,7 +82,7 @@ public class Game extends JFrame {
 			obj.draw(G);
 		}
 		
-		G.drawImage(renderer.outputFrame(), 0, 0, null);
+		G.drawImage(renderer.outputAllLayers(), 0, 0, null);
                 
         updateVars();
         try{

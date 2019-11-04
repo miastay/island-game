@@ -8,29 +8,36 @@ import java.awt.image.BufferedImage;
 
 public class Player implements Paintable {
 
+	private float speed = 5;
+	
 	Rectangle2D hitbox;
 	private boolean renderHitbox = true;
 	private String name;
+	private Sprite playerSprite;
 	private float x, y;
 	
 	float getX() {return x;}
 	float getY() {return y;}
-	void setX(float x) {this.x = x; hitbox.setRect(this.x, y, hitbox.getWidth(), hitbox.getHeight());}
-	void setY(float y) {this.y = y; hitbox.setRect(x, this.y, hitbox.getWidth(), hitbox.getHeight());}
+	void setX(float x) {this.x = x; hitbox.setRect(this.x, y, hitbox.getWidth(), hitbox.getHeight()); playerSprite.x = x;}
+	void setY(float y) {this.y = y; hitbox.setRect(x, this.y, hitbox.getWidth(), hitbox.getHeight()); playerSprite.y = y;}
 	
 	public Player(String name) {
 		this.name = name;
+		playerSprite = new Sprite(ResourceHandler.getImageFromKey(name), 0, 0, 1, 1);
 		setHitbox();
 		Game.objects++;
 		instantiateKeys();
+		Game.renderer.addSprite(playerSprite);
 	}
 	
 	public Player(String name, float x, float y) {
 		this.name = name;
+		playerSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 1);
 		setHitbox();
 		setX(x); setY(y);
 		Game.objects++;
 		instantiateKeys();
+		Game.renderer.addSprite(playerSprite);
 	}
 	private void instantiateKeys() {
 		Game.keylist.addKey(KeyEvent.VK_A);
@@ -46,23 +53,21 @@ public class Player implements Paintable {
 	}
 	private void checkKeys() {
 		if(Game.keylist.getKey(KeyEvent.VK_A)) {
-			setX(getX() - Game.deltaTime);
+			setX(getX() - speed * Game.deltaTime);
 		}
 		if(Game.keylist.getKey(KeyEvent.VK_W)) {
-			setY(getY() - Game.deltaTime);
+			setY(getY() - speed * Game.deltaTime);
 		}
 		if(Game.keylist.getKey(KeyEvent.VK_S)) {
-			setY(getY() + 1);
+			setY(getY() + speed * Game.deltaTime);
 		}
 		if(Game.keylist.getKey(KeyEvent.VK_D)) {
-			setX(getX() + 1);
+			setX(getX() + speed * Game.deltaTime);
 		}
 	}
 	
 	@Override
 	public void draw(Graphics G) {
-		BufferedImage img = ResourceHandler.getImageFromKey(name);
-		Game.renderer.addSprite(img, x, y, 1, 1);
 		if(renderHitbox) {
 			updateHitbox();
 			G.setColor(Color.ORANGE);

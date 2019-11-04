@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile implements Paintable, Animatable {
 	
+	private Sprite tileSprite;
 	private String name;		//reference for ResourceHandler
 	private String[] frames;	//used for animated tiles
         private float frameRate;
@@ -27,6 +28,8 @@ public class Tile implements Paintable, Animatable {
 		this.y = y;
 		Game.objects++;
 		type = Type.STATIC;
+		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 0);
+		Game.renderer.addSprite(tileSprite);
 	}
 	public Tile(String[] names, int x, int y, float frameRate) {
 		this.frames = names;
@@ -35,27 +38,22 @@ public class Tile implements Paintable, Animatable {
 		Game.objects++;
 		type = Type.ANIMATED;
                                 
-                currentFrame = 0;
-                this.frameRate = frameRate;
-                lastFrameMillis = System.currentTimeMillis();
+        currentFrame = 0;
+        this.frameRate = frameRate;
+        lastFrameMillis = System.currentTimeMillis();
+        
+        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, 0);
+		Game.renderer.addSprite(tileSprite);
 	}
 	@Override
 	public void draw(Graphics G) {
 		// TODO Auto-generated method stub
-		BufferedImage img;
 		if(type == Type.ANIMATED) {
-                        if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
-                                currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
-                                lastFrameMillis = System.currentTimeMillis();
-                        }
-                    
-			img = ResourceHandler.getImageFromKey(frames[currentFrame]);
-			Game.renderer.addSprite(img, x, y, 1, 0);
-		} else {
-			img = ResourceHandler.getImageFromKey(name);
-				if(img == null)
-					System.out.println("Image not found");
-				Game.renderer.addSprite(img, x, y, 1, 0);
+            if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
+                    currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
+                    tileSprite.image = ResourceHandler.getImageFromKey(frames[currentFrame]);
+                    lastFrameMillis = System.currentTimeMillis();
+            }
 		}
 		if(showFrame) {
 			G.setColor(Color.GREEN);
@@ -65,8 +63,6 @@ public class Tile implements Paintable, Animatable {
 	@Override
 	public void animate(Graphics G) {
 		// TODO Auto-generated method stub
-		BufferedImage img = ResourceHandler.getImageFromKey(frames[Game.FRAME % (frames.length)]);
-		Game.renderer.addSprite(img, x, y, 1, 0);
 	}
 	
 }

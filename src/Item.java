@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 public class Item implements Paintable {
 	
 	Rectangle2D hitbox;
+	private Sprite sprite;
 	private boolean renderHitbox = true;
 	private String name;
 	private float x, y;
@@ -21,12 +22,16 @@ public class Item implements Paintable {
 		this.name = name;
 		setHitbox();
 		Game.objects++;
+		sprite = new Sprite(ResourceHandler.getImageFromKey(name), 0, 0, 1, 1);
+		Game.renderer.addSprite(sprite);
 	}
 	public Item(String name, float x, float y) {
 		this.name = name;
 		setHitbox();
 		setX(x); setY(y);
 		Game.objects++;
+		sprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 1);
+		Game.renderer.addSprite(sprite);
 	}
 
 	private void setHitbox() {
@@ -37,8 +42,6 @@ public class Item implements Paintable {
 	}
 	@Override
 	public void draw(Graphics G) {
-		BufferedImage img = ResourceHandler.getImageFromKey(name);
-		Game.renderer.addSprite(img, x, y, 1, 0);
 		if(renderHitbox) { 
 			updateHitbox();
 			G.setColor(Color.orange);
