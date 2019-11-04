@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Player implements Paintable {
 
-	private float speed = 5;
+	private float speed = 3;
 	
 	Rectangle2D hitbox;
 	private boolean renderHitbox = true;
