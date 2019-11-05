@@ -85,6 +85,8 @@ public class Player implements GameObject {
 			Rectangle2D newHitbox = new Rectangle2D.Float(getX() + movementX, getY() + movementY, width, height);
 			boolean collision = false;
 			for(Item item : Game.items) {
+				
+				
 				if(newHitbox.intersects(item.hitbox)) {
 					collision = true;
 					if(movementX != 0) {
