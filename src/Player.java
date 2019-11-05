@@ -61,8 +61,8 @@ public class Player implements GameObject {
 	}
 	private void checkKeys() {
 		if(canControl) {
-			lastX = getX();
-			lastY = getY();
+				lastX = getX();
+				lastY = getY();
 			if(Game.keylist.getKey(KeyEvent.VK_A)) {
 				setX(getX() - speed * Game.deltaTime);
 			}
@@ -81,7 +81,23 @@ public class Player implements GameObject {
 	}
 	public void itemCollision(Item i) {
 		System.out.println("collision");
-//		setX(lastX);
+		setY(lastY > getY() ? (lastY+Game.deltaTime*speed) : (lastY-Game.deltaTime*speed));
+		setX(lastX > getX() ? (lastX+Game.deltaTime*speed) : (lastX-Game.deltaTime*speed));
+//		switch(outcode) {
+//		case Rectangle2D.OUT_BOTTOM :
+//			setY(lastY + Game.deltaTime);
+//		case Rectangle2D.OUT_LEFT :
+//			setX(lastX - Game.deltaTime);
+//		case Rectangle2D.OUT_RIGHT :
+//			setX(lastX + Game.deltaTime);
+//		case Rectangle2D.OUT_TOP :
+//			setY(lastY - Game.deltaTime);
+//		}
+			
+	}
+	
+	private float dist(float x1, float y1, float x2, float y2) {
+		return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
 	}
 	
 	public void update() {
