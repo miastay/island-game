@@ -1,13 +1,7 @@
-import java.awt.Image.*; 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;

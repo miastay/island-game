@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class Tile implements Paintable, Animatable {
+public class Tile implements GameObject{
 	
 	private Sprite tileSprite;
 	private String name;		//reference for ResourceHandler
@@ -53,9 +53,7 @@ public class Tile implements Paintable, Animatable {
         tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, 0);
 		Game.renderer.addSprite(tileSprite);
 	}
-	@Override
-	public void draw(Graphics G) {
-		// TODO Auto-generated method stub
+	public void update() {
 		//take this out for lag reduction? :
 			
 		if(type == Type.ANIMATED) {
@@ -67,14 +65,6 @@ public class Tile implements Paintable, Animatable {
 		} else {
 			tileSprite.image = ResourceHandler.getImageFromKey(name);
 		}
-		if(showFrame) {
-			G.setColor(Color.GREEN);
-			G.drawRect(x, y, Game.TILE_PIXELS, Game.TILE_PIXELS);
-		}
-	}
-	@Override
-	public void animate(Graphics G) {
-		// TODO Auto-generated method stub
 	}
 	
 }

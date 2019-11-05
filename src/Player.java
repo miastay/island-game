@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Player implements Paintable {
+public class Player implements GameObject {
 
 	private float speed = 3;
 	
@@ -70,12 +70,9 @@ public class Player implements Paintable {
 		}
 	}
 	
-	@Override
-	public void draw(Graphics G) {
+	public void update() {
 		if(renderHitbox) {
 			updateHitbox();
-			G.setColor(Color.ORANGE);
-			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		}
 		checkKeys();
 	}

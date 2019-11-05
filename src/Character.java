@@ -2,7 +2,7 @@
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-public class Character implements Paintable, Animatable {
+public class Character implements GameObject {
 
 	Rectangle2D hitbox;
 	private String name;
@@ -17,16 +17,9 @@ public class Character implements Paintable, Animatable {
 		this.name = name;
 		Game.objects++;
 	}
-	@Override
-	public void draw(Graphics G) {
-		// TODO Auto-generated method stub
-		  animate(G);
-	}
-	@Override
-	public void animate(Graphics G) {
-		// TODO Auto-generated method stub
+	
+	public void update() {
 		
 	}
-
 
 }

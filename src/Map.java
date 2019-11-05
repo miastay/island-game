@@ -1,11 +1,8 @@
-import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import javax.imageio.ImageIO;
-
-public class Map implements Paintable {
+public class Map {
 	
 	public static Tile[][] array = new Tile[26][26];
 	File location;
@@ -15,12 +12,11 @@ public class Map implements Paintable {
 		readMapFromCSV();
 	}
 
-	@Override
-	public void draw(Graphics G) {
+	public void update() {
 		for(Tile[] t : array) {
 			for(Tile i : t) {
 				if(i != null)
-					i.draw(G);
+					i.update();
 			}
 		}
 	}

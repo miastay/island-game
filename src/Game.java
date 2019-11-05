@@ -8,12 +8,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.util.concurrent.TimeUnit;
 
 public class Game extends JFrame {
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 	public static int objects;
 	public static int FRAME;
         public static float deltaTime;
@@ -21,11 +18,11 @@ public class Game extends JFrame {
         	public static int lastFPS;
 	public static long lastFrameMillis;
 	public static ResourceHandler resGrab;
-	public static List<Paintable> paintableObjects = new ArrayList<Paintable>();
+	public static ArrayList<GameObject> activeObjects = new ArrayList<GameObject>();
 		//public static float GRAPHICS_SCALE_FACTOR = 1f;
 		public static int TILE_PIXELS = 50;
 		/////
-	public static ArrayList<Object> allComponents = new ArrayList<>();
+	public static ArrayList<Object> allObjects = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
 		public static List<Tile> tiles = new ArrayList<Tile>();
 	///
@@ -57,7 +54,6 @@ public class Game extends JFrame {
 	}
 	
 	private void updateVars() {
-		TILE_PIXELS = 50;
         deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
         lastFrameMillis = System.currentTimeMillis();
         framesPerSecond = (int)((1000/deltaTime)/1000);
@@ -65,9 +61,9 @@ public class Game extends JFrame {
 	}
 	private void createComponents() {
 		//fill in whole list
-		allComponents.add(items);
-		allComponents.add(tiles);
-		allComponents.add(player);
+		allObjects.add(items);
+		allObjects.add(tiles);
+		allObjects.add(player);
 		/*
 		 * Create all components
 		 */
@@ -78,17 +74,15 @@ public class Game extends JFrame {
 	
 	public void paint(Graphics G) {
 		
-		G.setColor(Color.BLUE);
-		G.drawString(objects + "", 50, 50);
+		//G.setColor(Color.BLUE);
+		//G.drawString(objects + "", 50, 50);
 		
-		map.draw(G);
-		
-		for(Paintable obj : paintableObjects) {
-			obj.draw(G);
+		for(GameObject obj : activeObjects) {
+			obj.update();
 		}
 		
 		
-		G.drawImage(renderer.outputAllLayers(), 0, 0, null);
+		G.drawImage(renderer.outputAllLayers(new boolean[] {true, true, true}), 0, 0, null);
 		
 		G.setColor(Color.RED);
 		if(FRAME % 20 == 1)
@@ -96,15 +90,6 @@ public class Game extends JFrame {
 		G.drawString(lastFPS + "fps", 150, 40);
 		
         updateVars();
-        /*
-        try{
-            TimeUnit.MILLISECONDS.sleep(10);
-        } 
-        catch (Exception e){
-        	e.printStackTrace();
-        }
-        */
-        toolkit.sync();
         repaint();
 	}
 
@@ -122,8 +107,8 @@ public class Game extends JFrame {
 	}
 	
 	public static void addNewInstance(Object o) {
-		if(o instanceof Paintable) {
-			paintableObjects.add((Paintable) o);
+		if(o instanceof GameObject) {
+			activeObjects.add((GameObject) o);
 		}
 		if(o instanceof Item) {
 			items.add((Item) o);

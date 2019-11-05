@@ -13,6 +13,8 @@ public class ScreenRenderer {
 	public int tileResX = 35;
 	public int tileResY = 18;
 	
+	private BufferedImage[] layers = new BufferedImage[3];
+	
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	
 	
@@ -20,20 +22,34 @@ public class ScreenRenderer {
 		sprites.add(newSprite);
 	}
 	
-	BufferedImage outputLayerFrame(int layer) {
+	/*BufferedImage outputLayerFrame(int layer) {
 		return new BufferedImage(ColorModel.getRGBdefault(), renderSprites(layer), ColorModel.getRGBdefault().isAlphaPremultiplied(), null);
-	}
+	}*/
 	
-	BufferedImage outputAllLayers() {
+	BufferedImage outputAllLayers(boolean[] redrawLayers) {
 		BufferedImage finalFrame = new BufferedImage(tileResX * Game.TILE_PIXELS, tileResY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = finalFrame.createGraphics();
-		g.drawImage(outputLayerFrame(0), 0, 0, null);
-		g.drawImage(outputLayerFrame(1), 0, 0, null);
+		for(int i = 0; i < redrawLayers.length; i++) {
+			layers[i] = redrawLayers[i] ? renderSprites(i) : layers[i];
+			g.drawImage(layers[i], 0, 0, null);
+		}
 		g.dispose();
 		return finalFrame;
 	}
 	
-	WritableRaster renderSprites(int layer) {
+	BufferedImage renderSprites(int layer) {
+		BufferedImage currentLayer = new BufferedImage(tileResX * Game.TILE_PIXELS, tileResY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = currentLayer.createGraphics();
+		for(Sprite currentSprite : sprites) {
+			if(currentSprite.renderLayer == layer) {
+				g.drawImage(currentSprite.image, (int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), null);
+			} 
+		}
+		g.dispose();
+		return currentLayer;
+	}
+	
+	/*WritableRaster renderSprites(int layer) {
 		BufferedImage currentLayer = new BufferedImage(tileResX * Game.TILE_PIXELS, tileResY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		WritableRaster frameRaster = currentLayer.getRaster();
 		for(Sprite currentSprite : sprites) {
@@ -45,7 +61,7 @@ public class ScreenRenderer {
 			} 
 		}
 		return frameRaster;
-	}
+	}*/
 }
 
 /*class SpritePriotityQueue {

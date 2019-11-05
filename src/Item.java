@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Item implements Paintable {
+public class Item implements GameObject {
 	
 	Rectangle2D hitbox;
 	private Sprite sprite;
@@ -40,12 +40,10 @@ public class Item implements Paintable {
 	private void updateHitbox() {
 		hitbox.setRect(x, y, hitbox.getWidth(), hitbox.getHeight());
 	}
-	@Override
-	public void draw(Graphics G) {
+
+	public void update() {
 		if(renderHitbox) { 
 			updateHitbox();
-			G.setColor(Color.orange);
-			G.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		}
 	}
 	
