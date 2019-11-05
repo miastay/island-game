@@ -4,7 +4,7 @@ import java.io.FileReader;
 
 public class Map {
 	
-	public static Tile[][] array = new Tile[26][26];
+	public static Tile[][] array = new Tile[56][52];
 	File location;
 	
 	public Map() {
