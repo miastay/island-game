@@ -12,6 +12,7 @@ public class Player implements GameObject {
 	
 	Rectangle2D.Float hitbox;
 		private float width, height;
+		private boolean isColliding;
 	private boolean renderHitbox = true;
 	private String name;
 	private Sprite playerSprite;
@@ -24,8 +25,7 @@ public class Player implements GameObject {
 	void setX(float x) {this.x = x; playerSprite.x = x;}
 	void setY(float y) {this.y = y; playerSprite.y = y;}
 	
-	private float lastX;
-	private float lastY;
+	private float lastX, oldestX, lastY, oldestY;
 	
 	public Player(String name) {
 		this.name = name;
@@ -60,7 +60,9 @@ public class Player implements GameObject {
 		hitbox.setRect(x, y, width, height);
 	}
 	private void checkKeys() {
-		if(canControl) {
+		if(canControl && !isColliding) {
+				oldestX = lastX;
+				oldestY = lastY;
 				lastX = getX();
 				lastY = getY();
 			if(Game.keylist.getKey(KeyEvent.VK_A)) {
@@ -81,8 +83,12 @@ public class Player implements GameObject {
 	}
 	public void itemCollision(Item i) {
 		System.out.println("collision");
-		setY(lastY > getY() ? (lastY+Game.deltaTime*speed) : (lastY-Game.deltaTime*speed));
-		setX(lastX > getX() ? (lastX+Game.deltaTime*speed) : (lastX-Game.deltaTime*speed));
+		isColliding = true;
+		setY(oldestY);
+		setX(oldestX);
+//		setY(lastY > getY() ? (lastY+Game.deltaTime*speed) : (lastY-Game.deltaTime*speed));
+//		setX(lastX > getX() ? (lastX+Game.deltaTime*speed) : (lastX-Game.deltaTime*speed));
+		isColliding = false;
 //		switch(outcode) {
 //		case Rectangle2D.OUT_BOTTOM :
 //			setY(lastY + Game.deltaTime);
