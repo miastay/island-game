@@ -10,8 +10,9 @@ public class Player implements GameObject {
 
 	private float speed = 3;
 	
-	Rectangle2D hitbox;
-	private boolean renderHitbox = false;
+	Rectangle2D.Float hitbox;
+		private float width, height;
+	private boolean renderHitbox = true;
 	private String name;
 	private Sprite playerSprite;
 	private float x, y;
@@ -20,8 +21,11 @@ public class Player implements GameObject {
 	
 	float getX() {return x;}
 	float getY() {return y;}
-	void setX(float x) {this.x = x; hitbox.setRect(this.x, y, hitbox.getWidth(), hitbox.getHeight()); playerSprite.x = x;}
-	void setY(float y) {this.y = y; hitbox.setRect(x, this.y, hitbox.getWidth(), hitbox.getHeight()); playerSprite.y = y;}
+	void setX(float x) {this.x = x; playerSprite.x = x;}
+	void setY(float y) {this.y = y; playerSprite.y = y;}
+	
+	private float lastX;
+	private float lastY;
 	
 	public Player(String name) {
 		this.name = name;
@@ -48,13 +52,17 @@ public class Player implements GameObject {
 		Game.keylist.addKey(KeyEvent.VK_D);
 	}
 	private void setHitbox() {
-		hitbox = new Rectangle((int)(ResourceHandler.getImageFromKey(name).getWidth()), (int)(ResourceHandler.getImageFromKey(name).getHeight()));
+		width = (ResourceHandler.getImageFromKey(name).getWidth() + 0f )/ Game.TILE_PIXELS;
+		height = (ResourceHandler.getImageFromKey(name).getHeight() + 0f )/ Game.TILE_PIXELS;
+		hitbox = new Rectangle.Float(getX(), getY(), width, height);
 	}
 	private void updateHitbox() {
-		hitbox.setRect(x, y, hitbox.getWidth(), hitbox.getHeight());
+		hitbox.setRect(x, y, width, height);
 	}
 	private void checkKeys() {
 		if(canControl) {
+			lastX = getX();
+			lastY = getY();
 			if(Game.keylist.getKey(KeyEvent.VK_A)) {
 				setX(getX() - speed * Game.deltaTime);
 			}
@@ -66,14 +74,18 @@ public class Player implements GameObject {
 			}
 			if(Game.keylist.getKey(KeyEvent.VK_D)) {
 				setX(getX() + speed * Game.deltaTime);
+
 			}
+
 		}
+	}
+	public void itemCollision(Item i) {
+		System.out.println("collision");
+//		setX(lastX);
 	}
 	
 	public void update() {
-		if(renderHitbox) {
-			updateHitbox();
-		}
+		updateHitbox();
 		checkKeys();
 	}
 }
