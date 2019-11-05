@@ -17,7 +17,7 @@ public class Game extends JFrame {
 	public static long lastFrameMillis;
 	public static boolean isTrueFullScreen;
 	public static ResourceHandler resGrab;
-	public static ArrayList<GameObject> activeObjects = new ArrayList<>();
+	public static ArrayList<Updateable> activeObjects = new ArrayList<>();
 		//public static float GRAPHICS_SCALE_FACTOR = 1f;
 		public static int TILE_PIXELS = 50;
 		/////
@@ -86,7 +86,7 @@ public class Game extends JFrame {
 	
 	public void FrameLoop() {
 		while(true) {
-			for(GameObject obj : activeObjects) {
+			for(Updateable obj : activeObjects) {
 				obj.update();
 			}
 			
@@ -115,8 +115,8 @@ public class Game extends JFrame {
 		return false;
 	}
 	
-	public static void Instantiate(GameObject o) {
-		activeObjects.add((GameObject) o);
+	public static void Instantiate(Updateable o) {
+		activeObjects.add((Updateable) o);
 		
 		if(o instanceof Item) {
 			items.add((Item) o);
