@@ -98,7 +98,6 @@ public class Player implements GameObject {
 				}
 			}
 			
-			
 			if(!collision) {
 				setX(getX() + movementX);
 				setY(getY() + movementY);
