@@ -45,7 +45,7 @@ public class Tile implements GameObject{
         this.frameRate = frameRate;
         lastFrameMillis = System.currentTimeMillis();
         
-        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, 0);
+        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, 1);
 		Game.renderer.addSprite(tileSprite);
 	}
 	public void update() {
