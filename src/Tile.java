@@ -1,4 +1,4 @@
-public class Tile implements GameObject{
+public class Tile implements Updateable{
 	
 	private Sprite tileSprite;
 	private String name;		//reference for ResourceHandler

@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-public class Item implements GameObject {
+public class Item implements Updateable {
 	
 	Rectangle2D.Float hitbox;
 	private Sprite sprite;

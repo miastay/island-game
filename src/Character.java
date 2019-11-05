@@ -2,7 +2,7 @@
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-public class Character implements GameObject {
+public class Character implements Updateable {
 
 	Rectangle2D hitbox;
 	private String name;

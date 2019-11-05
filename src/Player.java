@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Player implements GameObject {
+public class Player implements Updateable {
 
 	private float speed = 3;
 	
