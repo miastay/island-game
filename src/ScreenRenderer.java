@@ -14,6 +14,8 @@ public class ScreenRenderer {
 	public int tileResX = 35;
 	public int tileResY = 18;
 	
+	
+	
 	private BufferedImage[] layers = new BufferedImage[3];
 	
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
@@ -28,6 +30,7 @@ public class ScreenRenderer {
 	}*/
 	
 	BufferedImage outputAllLayers(boolean[] redrawLayers) {
+		updateFrameRegion();
 		BufferedImage finalFrame = new BufferedImage(tileResX * Game.TILE_PIXELS, tileResY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = finalFrame.createGraphics();
 		for(int i = 0; i < redrawLayers.length; i++) {
@@ -55,6 +58,10 @@ public class ScreenRenderer {
 		return currentLayer;
 	}
 	
+	void updateFrameRegion() {
+		tileResX = Game.getFrames()[0].getWidth()/Game.TILE_PIXELS + 1;
+		tileResY = Game.getFrames()[0].getHeight()/Game.TILE_PIXELS + 1;
+	}
 }
 
 /*class SpritePriotityQueue {

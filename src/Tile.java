@@ -29,8 +29,8 @@ public class Tile implements GameObject{
 		this.y = y;
 		Game.objects++;
 		type = Type.STATIC;
-			if(name.contains("tree"))
-				this.contactType = Contact.COLLIDE;
+//			if(name.contains("tree"))
+//				this.contactType = Contact.COLLIDE;
 		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 0);
 		Game.renderer.addSprite(tileSprite);
 	}
@@ -49,7 +49,6 @@ public class Tile implements GameObject{
 		Game.renderer.addSprite(tileSprite);
 	}
 	public void update() {
-		//take this out for lag reduction? :
 		if(type == Type.ANIMATED) {
             if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
                     currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
