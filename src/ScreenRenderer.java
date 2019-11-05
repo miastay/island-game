@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -33,6 +34,11 @@ public class ScreenRenderer {
 			layers[i] = redrawLayers[i] ? renderSprites(i) : layers[i];
 			g.drawImage(layers[i], 0, 0, null);
 		}
+		if(Game.showFPS) {
+			g.setColor(Color.RED);
+			g.drawString(Game.currentFPS + "fps", 150, 40);
+		}
+		
 		g.dispose();
 		return finalFrame;
 	}
@@ -49,19 +55,6 @@ public class ScreenRenderer {
 		return currentLayer;
 	}
 	
-	/*WritableRaster renderSprites(int layer) {
-		BufferedImage currentLayer = new BufferedImage(tileResX * Game.TILE_PIXELS, tileResY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
-		WritableRaster frameRaster = currentLayer.getRaster();
-		for(Sprite currentSprite : sprites) {
-			if(currentSprite.renderLayer == layer) {
-				Raster spriteData = currentSprite.image.getData();
-				if(currentSprite.x < tileResX && currentSprite.renderLayer < tileResY) {
-					frameRaster.setRect((int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), spriteData);
-				}
-			} 
-		}
-		return frameRaster;
-	}*/
 }
 
 /*class SpritePriotityQueue {

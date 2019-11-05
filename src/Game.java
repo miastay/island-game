@@ -30,8 +30,9 @@ public class Game extends JFrame {
 	public static KeyboardListener keylist = new KeyboardListener();
 	public static ScreenRenderer renderer = new ScreenRenderer();
 	
-	public BufferedImage currentFrame;
-	public int currentFPS;
+	public static BufferedImage currentFrame;
+	public static int currentFPS;
+	public static boolean showFPS = true;
 	
 	public Game() {
 		Game.objects++;
@@ -92,8 +93,6 @@ public class Game extends JFrame {
 	
 	public void paint(Graphics G) {
 		G.drawImage(currentFrame, 0, 0, null);
-		G.setColor(Color.RED);
-		G.drawString(currentFPS + "fps", 150, 40);
 	}
 
 	public static boolean detectItemPlayerCollision(Rectangle2D hitbox) {
