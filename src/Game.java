@@ -1,28 +1,25 @@
 import java.awt.Color; 
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Toolkit;
 
 public class Game extends JFrame {
 
 	public static int objects;
 	public static int FRAME;
-        public static float deltaTime;
-        public static int framesPerSecond;
-        	public static int lastFPS;
+    public static float deltaTime;
 	public static long lastFrameMillis;
 	public static ResourceHandler resGrab;
-	public static ArrayList<GameObject> activeObjects = new ArrayList<GameObject>();
+	public static ArrayList<GameObject> activeObjects = new ArrayList<>();
 		//public static float GRAPHICS_SCALE_FACTOR = 1f;
 		public static int TILE_PIXELS = 50;
 		/////
-	public static ArrayList<Object> allObjects = new ArrayList<>();
 		public static List<Item> items = new ArrayList<Item>();
 		public static List<Tile> tiles = new ArrayList<Tile>();
 	///
@@ -32,6 +29,9 @@ public class Game extends JFrame {
 		
 	public static KeyboardListener keylist = new KeyboardListener();
 	public static ScreenRenderer renderer = new ScreenRenderer();
+	
+	public BufferedImage currentFrame;
+	public int currentFPS;
 	
 	public Game() {
 		Game.objects++;
@@ -51,46 +51,49 @@ public class Game extends JFrame {
 		createComponents();
 		keylist.StartKeyListener();
 		
+		FrameLoop();
 	}
 	
 	private void updateVars() {
         deltaTime = (System.currentTimeMillis() - lastFrameMillis) / 1000f;
         lastFrameMillis = System.currentTimeMillis();
-        framesPerSecond = (int)((1000/deltaTime)/1000);
 		FRAME++;
 	}
 	private void createComponents() {
 		//fill in whole list
-		allObjects.add(items);
-		allObjects.add(tiles);
-		allObjects.add(player);
+		
+		for(Item item : items) {
+			activeObjects.add(item);
+		}
+		for(Tile tile : tiles) {
+			activeObjects.add(tile);
+		}
 		/*
 		 * Create all components
 		 */
-			addNewInstance(new Item("crystal", 5, 5));
-			player = new Player("crystal", 1, 1);
-			addNewInstance(player);
+		Instantiate(new Item("crystal", 5, 5));
+		Instantiate(new Player("crystal", 1, 1));
+	}
+	
+	
+	public void FrameLoop() {
+		while(true) {
+			for(GameObject obj : activeObjects) {
+				obj.update();
+			}
+			
+			currentFrame = renderer.outputAllLayers(new boolean[] {true, true, true});
+			if(FRAME % 20 == 1)
+				currentFPS = (int)(1 / deltaTime);
+			repaint();
+	        updateVars();
+		}
 	}
 	
 	public void paint(Graphics G) {
-		
-		//G.setColor(Color.BLUE);
-		//G.drawString(objects + "", 50, 50);
-		
-		for(GameObject obj : activeObjects) {
-			obj.update();
-		}
-		
-		
-		G.drawImage(renderer.outputAllLayers(new boolean[] {true, true, true}), 0, 0, null);
-		
+		G.drawImage(currentFrame, 0, 0, null);
 		G.setColor(Color.RED);
-		if(FRAME % 20 == 1)
-			lastFPS = framesPerSecond;
-		G.drawString(lastFPS + "fps", 150, 40);
-		
-        updateVars();
-        repaint();
+		G.drawString(currentFPS + "fps", 150, 40);
 	}
 
 	public static boolean detectItemPlayerCollision(Rectangle2D hitbox) {
@@ -106,10 +109,9 @@ public class Game extends JFrame {
 		return false;
 	}
 	
-	public static void addNewInstance(Object o) {
-		if(o instanceof GameObject) {
-			activeObjects.add((GameObject) o);
-		}
+	public static void Instantiate(GameObject o) {
+		activeObjects.add((GameObject) o);
+		
 		if(o instanceof Item) {
 			items.add((Item) o);
 		}

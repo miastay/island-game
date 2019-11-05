@@ -41,6 +41,7 @@ public class Map {
 			    	}
 //			    	Game.addNewInstance(t);
 			    	array[i][j] = t;
+			    	Game.activeObjects.add(t);
 			    }
 			    j++;
 			}

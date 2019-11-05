@@ -1,7 +1,3 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
 public class Tile implements GameObject{
 	
 	private Sprite tileSprite;
@@ -12,7 +8,6 @@ public class Tile implements GameObject{
         private long lastFrameMillis;
 	private final int x, y;
 	public final Type type;
-	private boolean showFrame = false;
 	private Contact contactType = Contact.NONE;
 	
 	public static enum Contact {
@@ -55,7 +50,6 @@ public class Tile implements GameObject{
 	}
 	public void update() {
 		//take this out for lag reduction? :
-			
 		if(type == Type.ANIMATED) {
             if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
                     currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
