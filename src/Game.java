@@ -15,6 +15,7 @@ public class Game extends JFrame {
 	public static int FRAME;
     public static float deltaTime;
 	public static long lastFrameMillis;
+	public static boolean isTrueFullScreen;
 	public static ResourceHandler resGrab;
 	public static ArrayList<GameObject> activeObjects = new ArrayList<>();
 		//public static float GRAPHICS_SCALE_FACTOR = 1f;
@@ -37,7 +38,8 @@ public class Game extends JFrame {
 	public Game() {
 		Game.objects++;
 		resGrab = new ResourceHandler();
-		setSize(1200, 700); 
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setUndecorated(isTrueFullScreen);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
