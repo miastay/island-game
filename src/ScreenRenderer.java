@@ -14,12 +14,9 @@ public class ScreenRenderer {
 	public int tileResX = 35;
 	public int tileResY = 18;
 	
-	
-	
 	private BufferedImage[] layers = new BufferedImage[3];
 	
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-	
 	
 	void addSprite(Sprite newSprite) {
 		sprites.add(newSprite);
