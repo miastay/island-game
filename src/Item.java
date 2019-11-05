@@ -43,11 +43,11 @@ public class Item implements GameObject {
 
 	public void update() {
 			updateHitbox();
-		if(hitbox.intersects(Game.player.hitbox) && hitbox != null) {
+		/*if(hitbox.intersects(Game.player.hitbox) && hitbox != null) {
 			System.out.println(hitbox.x + ", " + hitbox.y);
 			System.out.println(Game.player.hitbox.x + ", " + Game.player.hitbox.y);
 			Game.player.itemCollision(this);
-		}
+		}*/
 	}
 	
 

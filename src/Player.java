@@ -61,24 +61,46 @@ public class Player implements GameObject {
 	}
 	private void checkKeys() {
 		if(canControl && !isColliding) {
-				oldestX = lastX;
-				oldestY = lastY;
-				lastX = getX();
-				lastY = getY();
+			oldestX = lastX;
+			oldestY = lastY;
+			lastX = getX();
+			lastY = getY();
+			
+			float movementX = 0.0f;
+			float movementY = 0.0f;
+			
 			if(Game.keylist.getKey(KeyEvent.VK_A)) {
-				setX(getX() - speed * Game.deltaTime);
+				movementX = -speed * Game.deltaTime;
 			}
 			if(Game.keylist.getKey(KeyEvent.VK_W)) {
-				setY(getY() - speed * Game.deltaTime);
+				movementY = -speed * Game.deltaTime;
 			}
 			if(Game.keylist.getKey(KeyEvent.VK_S)) {
-				setY(getY() + speed * Game.deltaTime);
+				movementY = speed * Game.deltaTime;
 			}
 			if(Game.keylist.getKey(KeyEvent.VK_D)) {
-				setX(getX() + speed * Game.deltaTime);
-
+				movementX = speed * Game.deltaTime;
 			}
 
+			Rectangle2D newHitbox = new Rectangle2D.Float(getX() + movementX, getY() + movementY, width, height);
+			boolean collision = false;
+			for(Item item : Game.items) {
+				if(newHitbox.intersects(item.hitbox)) {
+					collision = true;
+					if(movementX != 0) {
+						setX(movementX > 0 ? item.getX() - (item.hitbox.width / 2 + hitbox.width / 2) : item.getX() + (item.hitbox.width / 2 + hitbox.width / 2));
+					}
+					if(movementY != 0) {
+						setY(movementY > 0 ? item.getY() - (item.hitbox.height / 2 + hitbox.height / 2) : item.getY() + (item.hitbox.height / 2 + hitbox.height / 2));
+					}
+				}
+			}
+			
+			
+			if(!collision) {
+				setX(getX() + movementX);
+				setY(getY() + movementY);
+			}
 		}
 	}
 	public void itemCollision(Item i) {
