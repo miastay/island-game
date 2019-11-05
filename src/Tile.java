@@ -23,7 +23,7 @@ public class Tile implements GameObject{
 		STATIC;
 	}
 
-	public Tile(String name, int x, int y) {
+	public Tile(String name, int x, int y, int layer) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
@@ -31,7 +31,7 @@ public class Tile implements GameObject{
 		type = Type.STATIC;
 //			if(name.contains("tree"))
 //				this.contactType = Contact.COLLIDE;
-		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, 0);
+		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, layer);
 		Game.renderer.addSprite(tileSprite);
 	}
 	public Tile(String[] names, int x, int y, float frameRate) {
