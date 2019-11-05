@@ -4,27 +4,31 @@ import java.io.FileReader;
 
 public class Map {
 	
-	public static Tile[][] array = new Tile[56][52];
-	File location;
+	public static Tile[][] baseArray = new Tile[56][52];
+	public static Tile[][] overlayArray = new Tile[56][52];
+	File baseLocation, overlayLocation;
 	
 	public Map() {
-		location = Game.mapLocation;
-		readMapFromCSV();
+		baseLocation = Game.mapLocation;
+		overlayLocation = Game.mapOverlayLocation;
+		readMapsFromCSV();
 	}
 
 	public void update() {
-		for(Tile[] t : array) {
-			for(Tile i : t) {
-				if(i != null)
-					i.update();
+		for(int i = 0; i < baseArray.length; i++) {
+			for(int j = 0; j < baseArray[0].length; j++) {
+				if(baseArray[i][j] != null)
+					baseArray[i][j].update();
+				if(overlayArray[i][j] != null)
+					overlayArray[i][j].update();
 			}
 		}
 	}
 	
-	private void readMapFromCSV() {
+	private void readMapsFromCSV() {
 		try {
 			String line;
-			BufferedReader csvReader = new BufferedReader(new FileReader(location));
+			BufferedReader csvReader = new BufferedReader(new FileReader(baseLocation));
 			
 			int j = 0;
 			
@@ -37,11 +41,37 @@ public class Map {
 			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9"};
 			    		t = new Tile(s, i, j, 2);
 			    	} else {
-			    		t = new Tile(data[i] + "", i, j);
+			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
 //			    	Game.addNewInstance(t);
-			    	array[i][j] = t;
+			    	baseArray[i][j] = t;
 			    	Game.activeObjects.add(t);
+			    }
+			    j++;
+			}
+			csvReader.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		//now handle overlay tiles
+		try {
+			String line;
+			BufferedReader csvReader = new BufferedReader(new FileReader(overlayLocation));
+			
+			int j = 0;
+			
+			while ((line = csvReader.readLine()) != null) {
+			    String[] data = line.split(",");
+			    //creates new key from name in first column and path in second
+			    for(int i = 0; i < data.length; i++) {
+			    	if(data[i] != "") {
+				    	Tile t;
+				    	//if overlay tile is going over a water tile, don't put it in layer 2
+				    	t = new Tile(data[i] + "", i, j, data[i].contains("sand") ? 1 : 2);
+				    	overlayArray[i][j] = t;
+				    	Game.activeObjects.add(t);
+			    	}
 			    }
 			    j++;
 			}

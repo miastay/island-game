@@ -27,6 +27,7 @@ public class Game extends JFrame {
 	public static Player player;
 	public static Map map;
 		public static File mapLocation = new File("./res/newdefaultmap.csv");
+		public static File mapOverlayLocation = new File("./res/newoverlaymap.csv");
 		
 	public static KeyboardListener keylist = new KeyboardListener();
 	public static ScreenRenderer renderer = new ScreenRenderer();
