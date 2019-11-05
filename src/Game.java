@@ -54,7 +54,8 @@ public class Game extends JFrame {
 		createComponents();
 		keylist.StartKeyListener();
 		
-		currentFrame = renderer.outputAllLayers(new boolean[] {true, true, true});
+		renderer.forceLayerUpdate(0);
+		currentFrame = renderer.outputAllLayers();
 		FrameLoop();
 	}
 	
@@ -88,7 +89,7 @@ public class Game extends JFrame {
 				obj.update();
 			}
 			
-			currentFrame = renderer.outputAllLayers(new boolean[] {false, true, true});
+			currentFrame = renderer.outputAllLayers();
 			if(FRAME % 60 == 1)
 				currentFPS = (int)(1 / deltaTime);
 			repaint();
