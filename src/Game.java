@@ -84,7 +84,7 @@ public class Game extends JFrame {
 			}
 			
 			currentFrame = renderer.outputAllLayers(new boolean[] {true, true, true});
-			if(FRAME % 20 == 1)
+			if(FRAME % 60 == 1)
 				currentFPS = (int)(1 / deltaTime);
 			repaint();
 	        updateVars();
