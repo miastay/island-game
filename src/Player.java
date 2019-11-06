@@ -82,26 +82,33 @@ public class Player implements Updateable {
 				movementX = speed * Game.deltaTime;
 			}
 
-			Rectangle2D newHitbox = new Rectangle2D.Float(getX() + movementX, getY() + movementY, width, height);
-			boolean collision = false;
+			Rectangle2D movementBox = new Rectangle2D.Float(getX() + movementX, getY() + movementY, width, height);
+			Rectangle2D movementBoxX = new Rectangle2D.Float(getX() + movementX, getY(), width, height);
+			Rectangle2D movementBoxY = new Rectangle2D.Float(getX(), getY() + movementY, width, height);
 			for(Item item : Game.items) {
 				
 				
-				if(newHitbox.intersects(item.hitbox)) {
-					collision = true;
-					if(movementX != 0) {
+				//float closestX = getX() + movementX - item.getX() < item.getX() + item.hitbox.width - getX() ? getX() + movementX - item.getX() : item.getX() + item.hitbox.width - getX();
+				//float closestY = getY() + movementY - item.getY() < item.getY() + item.hitbox.height - getY() ? getY() + movementY - item.getY() : item.getY() + item.hitbox.height - getY();
+
+				if(movementBox.intersects(item.hitbox)){
+					if(movementBoxX.intersects(item.hitbox)) {
 						setX(movementX > 0 ? item.getX() - (item.hitbox.width / 2 + hitbox.width / 2) : item.getX() + (item.hitbox.width / 2 + hitbox.width / 2));
+						movementX = 0;
 					}
-					if(movementY != 0) {
+					if(movementBoxY.intersects(item.hitbox)) {
 						setY(movementY > 0 ? item.getY() - (item.hitbox.height / 2 + hitbox.height / 2) : item.getY() + (item.hitbox.height / 2 + hitbox.height / 2));
+						movementY = 0;
 					}
 				}
 			}
-			
-			if(!collision) {
-				setX(getX() + movementX);
-				setY(getY() + movementY);
+			if(movementX != 0 && movementY != 0) {
+				movementX *= 1 / Math.sqrt(2);
+				movementY *= 1 / Math.sqrt(2);
 			}
+			
+			setX(getX() + movementX);
+			setY(getY() + movementY);
 		}
 	}
 	public void itemCollision(Item i) {
