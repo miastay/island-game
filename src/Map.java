@@ -10,7 +10,7 @@ public class Map {
 	public static Tile[][] baseArray = new Tile[56][52];
 	public static Tile[][] overlayArray = new Tile[56][52];
 	File baseLocation, overlayLocation;
-	public static List<Rectangle2D.Float> collisionTiles = new ArrayList<Rectangle2D.Float>();
+	public static List<Tile> collisionTiles = new ArrayList<Tile>();
 	
 	public Map() {
 		baseLocation = Game.mapLocation;
@@ -47,8 +47,8 @@ public class Map {
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
-			    	if(data[i].equals("tree-grass1"))
-			    		collisionTiles.add(new Rectangle2D.Float(i, j+1, 1, 1));
+			    	if(data[i].equals("tree-grass"))
+			    		collisionTiles.add(t);
 //			    	Game.addNewInstance(t);
 			    	baseArray[i][j] = t;
 			    	Game.activeObjects.add(t);

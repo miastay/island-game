@@ -2,6 +2,8 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.Renderer;
+
 public class Player implements Updateable {
 
 	private float speed = 3;
@@ -85,20 +87,37 @@ public class Player implements Updateable {
 			
 				if(movementBox.intersects(item.hitbox)){
 					if(movementBoxX.intersects(item.hitbox)) {
-						setX(movementX > 0 ? item.getX() - (item.hitbox.width / 2 + hitbox.width / 2) : item.getX() + (item.hitbox.width / 2 + hitbox.width / 2));
+						setX(movementX > 0 ? item.getX() - hitbox.width : item.getX() + item.hitbox.width);
 						movementX = 0;
 					}
 					if(movementBoxY.intersects(item.hitbox)) {
-						setY(movementY > 0 ? item.getY() - (item.hitbox.height / 2 + hitbox.height / 2) : item.getY() + (item.hitbox.height / 2 + hitbox.height / 2));
+						setY(movementY > 0 ? item.getY() - hitbox.height : item.getY() + item.hitbox.height);
 						movementY = 0;
 					}
 				}
 			}
+			for(Tile tile : Map.collisionTiles) {
+				Rectangle2D.Float tileBox = new Rectangle.Float(tile.getX(), tile.getY(), 1.0f, 1.0f);
+				if(movementBox.intersects(tileBox)){
+					if(movementBoxX.intersects(tileBox)) {
+						setX(movementX > 0 ? tile.getX() - hitbox.width - 1.0f / Game.TILE_PIXELS : tile.getX() + tileBox.width);
+						movementX = 0;
+					}
+					if(movementBoxY.intersects(tileBox)) {
+						setY(movementY > 0 ? tile.getY() - hitbox.height - 1.0f / Game.TILE_PIXELS : tile.getY() + tileBox.height);
+						movementY = 0;
+					}
+				}
+			}
+			
 			//check collideable tiles
-			for(Rectangle2D.Float rect : Map.collisionTiles) {
+			/*for(Rectangle2D.Float rect : Map.collisionTiles) {
 				
 				if(movementBox.intersects(rect)){
 					if(movementBoxX.intersects(rect)) {
+						System.out.println(movementBoxX.getX() + hitbox.width);
+						System.out.println(rect.getX());
+						System.out.println(rect.getX() - hitbox.width + "   " + rect.getX());
 						setX(movementX > 0 ? (float)(rect.getX() - hitbox.width) : (float)(rect.getX() + rect.width));
 						movementX = 0;
 					}
@@ -107,7 +126,7 @@ public class Player implements Updateable {
 						movementY = 0;
 					}
 				}
-			}
+			}*/
 			if(movementX != 0 && movementY != 0) {
 				movementX *= 1 / Math.sqrt(2);
 				movementY *= 1 / Math.sqrt(2);
