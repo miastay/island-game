@@ -48,7 +48,7 @@ public class Map {
 			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
 			    	if(data[i].equals("tree-grass1"))
-			    		collisionTiles.add(new Rectangle2D.Float(i, j, Game.TILE_PIXELS, Game.TILE_PIXELS));
+			    		collisionTiles.add(new Rectangle2D.Float(i, j, 1, 1));
 //			    	Game.addNewInstance(t);
 			    	baseArray[i][j] = t;
 			    	Game.activeObjects.add(t);

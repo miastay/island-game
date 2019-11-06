@@ -1,10 +1,6 @@
-
-import java.awt.Color; 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 public class Player implements Updateable {
 
@@ -52,8 +48,8 @@ public class Player implements Updateable {
 		Game.keylist.addKey(KeyEvent.VK_D);
 	}
 	private void setHitbox() {
-		width = (ResourceHandler.getImageFromKey(name).getWidth() + 0f )/ Game.TILE_PIXELS;
-		height = (ResourceHandler.getImageFromKey(name).getHeight() + 0f )/ Game.TILE_PIXELS;
+		width = (ResourceHandler.getImageFromKey(name).getWidth() + 0f ) / Game.TILE_PIXELS;
+		height = (ResourceHandler.getImageFromKey(name).getHeight() + 0f ) / Game.TILE_PIXELS;
 		hitbox = new Rectangle.Float(getX(), getY(), width, height);
 	}
 	private void updateHitbox() {
@@ -86,11 +82,7 @@ public class Player implements Updateable {
 			Rectangle2D movementBoxX = new Rectangle2D.Float(getX() + movementX, getY(), width, height);
 			Rectangle2D movementBoxY = new Rectangle2D.Float(getX(), getY() + movementY, width, height);
 			for(Item item : Game.items) {
-				
-				
-				//float closestX = getX() + movementX - item.getX() < item.getX() + item.hitbox.width - getX() ? getX() + movementX - item.getX() : item.getX() + item.hitbox.width - getX();
-				//float closestY = getY() + movementY - item.getY() < item.getY() + item.hitbox.height - getY() ? getY() + movementY - item.getY() : item.getY() + item.hitbox.height - getY();
-
+			
 				if(movementBox.intersects(item.hitbox)){
 					if(movementBoxX.intersects(item.hitbox)) {
 						setX(movementX > 0 ? item.getX() - (item.hitbox.width / 2 + hitbox.width / 2) : item.getX() + (item.hitbox.width / 2 + hitbox.width / 2));
@@ -105,19 +97,13 @@ public class Player implements Updateable {
 			//check collideable tiles
 			for(Rectangle2D.Float rect : Map.collisionTiles) {
 				
-				System.out.println("y");
-				System.out.println(rect.x + "," + rect.y);
-				
-				//float closestX = getX() + movementX - item.getX() < item.getX() + item.hitbox.width - getX() ? getX() + movementX - item.getX() : item.getX() + item.hitbox.width - getX();
-				//float closestY = getY() + movementY - item.getY() < item.getY() + item.hitbox.height - getY() ? getY() + movementY - item.getY() : item.getY() + item.hitbox.height - getY();
-
 				if(movementBox.intersects(rect)){
 					if(movementBoxX.intersects(rect)) {
-						setX(movementX > 0 ? (float)(rect.getX() - (rect.width / 2 + hitbox.width / 2)) : (float)(rect.getX() + (rect.width / 2 + hitbox.width / 2)));
+						setX(movementX > 0 ? (float)(rect.getX() - hitbox.width) : (float)(rect.getX() + rect.width));
 						movementX = 0;
 					}
 					if(movementBoxY.intersects(rect)) {
-						setY(movementY > 0 ? (float)(rect.getY() - (rect.height / 2 + hitbox.height / 2)) : (float)(rect.getY() + (rect.height / 2 + hitbox.height / 2)));
+						setY(movementY > 0 ? (float)(rect.getY() - hitbox.height) : (float)(rect.getY() + rect.height));
 						movementY = 0;
 					}
 				}
