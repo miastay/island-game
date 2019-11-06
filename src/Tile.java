@@ -17,6 +17,7 @@ public class Tile implements Updateable{
 
 	float getX() {return x;}
 	float getY() {return y;}
+	String getName() {return name;}
 	
 	public enum Type {
 		ANIMATED,
@@ -29,10 +30,9 @@ public class Tile implements Updateable{
 		this.y = y;
 		Game.objects++;
 		type = Type.STATIC;
-//			if(name.contains("tree"))
-//				this.contactType = Contact.COLLIDE;
 		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, layer);
 		Game.renderer.addSprite(tileSprite);
+		
 	}
 	public Tile(String[] names, int x, int y, float frameRate) {
 		this.frames = names;

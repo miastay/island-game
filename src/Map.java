@@ -1,12 +1,16 @@
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Map {
 	
 	public static Tile[][] baseArray = new Tile[56][52];
 	public static Tile[][] overlayArray = new Tile[56][52];
 	File baseLocation, overlayLocation;
+	public static List<Rectangle2D.Float> collisionTiles = new ArrayList<Rectangle2D.Float>();
 	
 	public Map() {
 		baseLocation = Game.mapLocation;
@@ -43,6 +47,8 @@ public class Map {
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
+			    	if(data[i].equals("tree-grass1"))
+			    		collisionTiles.add(new Rectangle2D.Float(i, j, Game.TILE_PIXELS, Game.TILE_PIXELS));
 //			    	Game.addNewInstance(t);
 			    	baseArray[i][j] = t;
 			    	Game.activeObjects.add(t);

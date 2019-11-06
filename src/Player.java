@@ -102,6 +102,26 @@ public class Player implements Updateable {
 					}
 				}
 			}
+			//check collideable tiles
+			for(Rectangle2D.Float rect : Map.collisionTiles) {
+				
+				System.out.println("y");
+				System.out.println(rect.x + "," + rect.y);
+				
+				//float closestX = getX() + movementX - item.getX() < item.getX() + item.hitbox.width - getX() ? getX() + movementX - item.getX() : item.getX() + item.hitbox.width - getX();
+				//float closestY = getY() + movementY - item.getY() < item.getY() + item.hitbox.height - getY() ? getY() + movementY - item.getY() : item.getY() + item.hitbox.height - getY();
+
+				if(movementBox.intersects(rect)){
+					if(movementBoxX.intersects(rect)) {
+						setX(movementX > 0 ? (float)(rect.getX() - (rect.width / 2 + hitbox.width / 2)) : (float)(rect.getX() + (rect.width / 2 + hitbox.width / 2)));
+						movementX = 0;
+					}
+					if(movementBoxY.intersects(rect)) {
+						setY(movementY > 0 ? (float)(rect.getY() - (rect.height / 2 + hitbox.height / 2)) : (float)(rect.getY() + (rect.height / 2 + hitbox.height / 2)));
+						movementY = 0;
+					}
+				}
+			}
 			if(movementX != 0 && movementY != 0) {
 				movementX *= 1 / Math.sqrt(2);
 				movementY *= 1 / Math.sqrt(2);
