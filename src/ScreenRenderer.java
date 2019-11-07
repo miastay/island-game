@@ -9,6 +9,7 @@ public class ScreenRenderer {
 	
 	public float cameraLocalX = 0.0f;
 	public float cameraLocalY = 0.0f;
+	public float cameraScale = 0.5f;
 	
 	public int tilesViewedX;
 	public int tilesViewedY;
@@ -24,16 +25,19 @@ public class ScreenRenderer {
 	
 	BufferedImage outputAllLayers() {
 		updateFrameRegion();
-		BufferedImage finalFrame = new BufferedImage(tilesViewedX * Game.TILE_PIXELS, tilesViewedY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage finalFrame = new BufferedImage(tilesViewedX * (int)(Game.TILE_PIXELS / cameraScale), tilesViewedY * (int)(Game.TILE_PIXELS / cameraScale), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = finalFrame.createGraphics();
+		g.scale(1 / cameraScale, 1 / cameraScale);
 		for(int i = 0; i < layers.length; i++) {
 			layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
 			g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
+			//g.drawImage(layers[i], 0, 0, null);
 		}
 		
 		if(Game.showDebug) {
 			g.setColor(Color.RED);
 			g.drawString(Game.currentFPS + "fps", 150, 40);
+			g.drawString("Tiles: " + tilesViewedX + " , " + tilesViewedY, 150, 80);
 		}
 		
 		g.dispose();
@@ -71,8 +75,8 @@ public class ScreenRenderer {
 	
 	
 	void updateFrameRegion() {
-		tilesViewedX = Game.getFrames()[0].getWidth()/Game.TILE_PIXELS + 1;
-		tilesViewedY = Game.getFrames()[0].getHeight()/Game.TILE_PIXELS + 1;
+		tilesViewedX = (int)((Game.getFrames()[0].getWidth()/Game.TILE_PIXELS) * cameraScale) + 1;
+		tilesViewedY = (int)((Game.getFrames()[0].getHeight()/Game.TILE_PIXELS) * cameraScale) + 1;
 	}
 	
 	void forceLayerUpdate(int layerIndex, boolean renderAllSprites) {

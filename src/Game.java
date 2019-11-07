@@ -42,6 +42,7 @@ public class Game extends JFrame {
 		resGrab = new ResourceHandler();
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setUndecorated(isTrueFullScreen);
+		//setSize(1000, 1000);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
