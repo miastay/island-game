@@ -29,7 +29,7 @@ public class ScreenRenderer {
 			g.drawImage(layers[i], 0, 0, null);
 		}
 		
-		if(Game.showFPS) {
+		if(Game.showDebug) {
 			g.setColor(Color.RED);
 			g.drawString(Game.currentFPS + "fps", 150, 40);
 		}

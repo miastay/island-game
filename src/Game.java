@@ -1,5 +1,6 @@
 import java.awt.Color; 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -34,7 +35,7 @@ public class Game extends JFrame {
 	
 	public static BufferedImage currentFrame;
 	public static int currentFPS;
-	public static boolean showFPS = true;
+	public static boolean showDebug;
 	
 	public Game() {
 		Game.objects++;
@@ -53,6 +54,8 @@ public class Game extends JFrame {
 		 * 
 		 */
 		createComponents();
+			//for debug screen
+			keylist.addKey(KeyEvent.VK_F1);
 		keylist.StartKeyListener();
 		
 		renderer.forceLayerUpdate(0);
@@ -93,6 +96,9 @@ public class Game extends JFrame {
 			currentFrame = renderer.outputAllLayers();
 			if(FRAME % 60 == 1)
 				currentFPS = (int)(1 / deltaTime);
+			if(keylist.getKey(KeyEvent.VK_F1)) {
+				showDebug = !showDebug;
+			}
 			repaint();
 	        updateVars();
 		}
