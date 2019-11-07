@@ -54,6 +54,7 @@ public class ScreenRenderer {
 		return currentLayer;
 	}
 	
+	
 	void updateFrameRegion() {
 		tilesViewedX = Game.getFrames()[0].getWidth()/Game.TILE_PIXELS + 1;
 		tilesViewedY = Game.getFrames()[0].getHeight()/Game.TILE_PIXELS + 1;
