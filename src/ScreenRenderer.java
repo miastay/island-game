@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class ScreenRenderer {
 	
-	public float cameraLocalX;
-	public float cameraLocalY;
+	public float cameraLocalX = 0.0f;
+	public float cameraLocalY = 0.0f;
 	
 	public int tilesViewedX;
 	public int tilesViewedY;
@@ -32,7 +32,6 @@ public class ScreenRenderer {
 		if(Game.showFPS) {
 			g.setColor(Color.RED);
 			g.drawString(Game.currentFPS + "fps", 150, 40);
-			g.drawString(Game.player.getX() + "x", 150, 80);
 		}
 		
 		g.dispose();
@@ -45,9 +44,9 @@ public class ScreenRenderer {
 		for(Sprite currentSprite : sprites) {
 			if(currentSprite.renderLayer == layerIndex) {
 				if(layersStatic[layerIndex]) {
-					g.drawImage(currentSprite.image, (int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), null);
+					g.drawImage(currentSprite.image, (int)((currentSprite.x - cameraLocalX) * Game.TILE_PIXELS), (int)((currentSprite.y - cameraLocalY) * Game.TILE_PIXELS), null);
 				} else {
-					g.drawImage(currentSprite.image, (int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), null);	
+					g.drawImage(currentSprite.image, (int)((currentSprite.x - cameraLocalX) * Game.TILE_PIXELS), (int)((currentSprite.y - cameraLocalY) * Game.TILE_PIXELS), null);	
 				}
 			} 
 		}
@@ -65,33 +64,3 @@ public class ScreenRenderer {
 		layers[layerIndex] = renderSprites(layerIndex);
 	}
 }
-
-/*class SpritePriotityQueue {
-	ArrayList<Sprite> sprites;
-	ArrayList<Integer> layers;
-	
-	SpritePriotityQueue(){
-		sprites = new ArrayList<Sprite>();
-		layers = new ArrayList<Integer>();
-	}
-	
-	void Queue(Sprite sprite, int layer) {
-		sprites.add(sprite);
-		layers.add(layer);
-	}
-	
-	Sprite Dequeue() {
-		int lowestLayer = Integer.MAX_VALUE;
-		int lowestLayerIndex = 0;
-		for(int i = 0; i < sprites.size(); i++) {
-			if(layers.get(i) < lowestLayer) {
-				lowestLayerIndex = i;
-				lowestLayer = layers.get(i);
-			}
-		}
-		Sprite output = sprites.get(lowestLayerIndex);
-		sprites.remove(lowestLayerIndex);
-		layers.remove(lowestLayerIndex);
-		return output;
-	}
-}*/

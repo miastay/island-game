@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player implements Updateable {
 
-	private float speed = 3;
+	private float speed = 10;
 	
 	Rectangle2D.Float hitbox;
 		private float width, height;
@@ -106,24 +106,6 @@ public class Player implements Updateable {
 					}
 				}
 			}
-			
-			//check collideable tiles
-			/*for(Rectangle2D.Float rect : Map.collisionTiles) {
-				
-				if(movementBox.intersects(rect)){
-					if(movementBoxX.intersects(rect)) {
-						System.out.println(movementBoxX.getX() + hitbox.width);
-						System.out.println(rect.getX());
-						System.out.println(rect.getX() - hitbox.width + "   " + rect.getX());
-						setX(movementX > 0 ? (float)(rect.getX() - hitbox.width) : (float)(rect.getX() + rect.width));
-						movementX = 0;
-					}
-					if(movementBoxY.intersects(rect)) {
-						setY(movementY > 0 ? (float)(rect.getY() - hitbox.height) : (float)(rect.getY() + rect.height));
-						movementY = 0;
-					}
-				}
-			}*/
 			if(movementX != 0 && movementY != 0) {
 				movementX *= 1 / Math.sqrt(2);
 				movementY *= 1 / Math.sqrt(2);
@@ -133,26 +115,6 @@ public class Player implements Updateable {
 			setY(getY() + movementY);
 		}
 	}
-	public void itemCollision(Item i) {
-		System.out.println("collision");
-		isColliding = true;
-		setY(oldestY);
-		setX(oldestX);
-//		setY(lastY > getY() ? (lastY+Game.deltaTime*speed) : (lastY-Game.deltaTime*speed));
-//		setX(lastX > getX() ? (lastX+Game.deltaTime*speed) : (lastX-Game.deltaTime*speed));
-		isColliding = false;
-//		switch(outcode) {
-//		case Rectangle2D.OUT_BOTTOM :
-//			setY(lastY + Game.deltaTime);
-//		case Rectangle2D.OUT_LEFT :
-//			setX(lastX - Game.deltaTime);
-//		case Rectangle2D.OUT_RIGHT :
-//			setX(lastX + Game.deltaTime);
-//		case Rectangle2D.OUT_TOP :
-//			setY(lastY - Game.deltaTime);
-//		}
-			
-	}
 	
 	private float dist(float x1, float y1, float x2, float y2) {
 		return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
@@ -161,5 +123,18 @@ public class Player implements Updateable {
 	public void update() {
 		updateHitbox();
 		checkKeys();
+		
+		boolean needRedraw = false;
+		if(getX() > Game.renderer.tilesViewedX / 2 && getX() < Map.baseArray.length - Game.renderer.tilesViewedX / 2) {
+			Game.renderer.cameraLocalX = getX() - Game.renderer.tilesViewedX / 2;
+			needRedraw = true;
+		}
+		if(getY() > Game.renderer.tilesViewedY / 2 && getY() < Map.baseArray[0].length - Game.renderer.tilesViewedY / 2) {
+			Game.renderer.cameraLocalY = getY() - Game.renderer.tilesViewedY / 2;
+			needRedraw = true;
+		}
+		if(needRedraw) {
+			Game.renderer.forceLayerUpdate(0);
+		}
 	}
 }
