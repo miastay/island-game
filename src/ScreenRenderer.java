@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -25,8 +27,8 @@ public class ScreenRenderer {
 		BufferedImage finalFrame = new BufferedImage(tilesViewedX * Game.TILE_PIXELS, tilesViewedY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = finalFrame.createGraphics();
 		for(int i = 0; i < layers.length; i++) {
-			layers[i] = !layersStatic[i] ? renderSprites(i) : layers[i];
-			g.drawImage(layers[i], 0, 0, null);
+			layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
+			g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
 		}
 		
 		if(Game.showDebug) {
@@ -38,16 +40,29 @@ public class ScreenRenderer {
 		return finalFrame;
 	}
 	
-	BufferedImage renderSprites(int layerIndex) {
-		BufferedImage currentLayer = new BufferedImage(tilesViewedX * Game.TILE_PIXELS, tilesViewedY * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+	
+	BufferedImage renderViewedSprites(int layerIndex) {
+		BufferedImage currentLayer = new BufferedImage(Game.map.baseArray.length * Game.TILE_PIXELS, Game.map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+		Rectangle2D.Float screenRect = new Rectangle.Float(cameraLocalX, cameraLocalY, tilesViewedX, tilesViewedY);
+		Graphics2D g = currentLayer.createGraphics();
+		for(Sprite currentSprite : sprites) {
+			if(currentSprite.renderLayer == layerIndex && currentSprite.image != null) {
+				Rectangle2D.Float spriteRect = new Rectangle.Float(currentSprite.x, currentSprite.y, currentSprite.image.getWidth(), currentSprite.image.getHeight());
+				if(spriteRect.intersects(screenRect)) {
+					g.drawImage(currentSprite.image, (int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), null);
+				}
+			} 
+		}
+		g.dispose();
+		return currentLayer;
+	}
+	
+	BufferedImage renderAllSprites(int layerIndex) {
+		BufferedImage currentLayer =  new BufferedImage(Game.map.baseArray.length * Game.TILE_PIXELS, Game.map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = currentLayer.createGraphics();
 		for(Sprite currentSprite : sprites) {
 			if(currentSprite.renderLayer == layerIndex) {
-				if(layersStatic[layerIndex]) {
-					g.drawImage(currentSprite.image, (int)((currentSprite.x - cameraLocalX) * Game.TILE_PIXELS), (int)((currentSprite.y - cameraLocalY) * Game.TILE_PIXELS), null);
-				} else {
-					g.drawImage(currentSprite.image, (int)((currentSprite.x - cameraLocalX) * Game.TILE_PIXELS), (int)((currentSprite.y - cameraLocalY) * Game.TILE_PIXELS), null);	
-				}
+				g.drawImage(currentSprite.image, (int)(currentSprite.x * Game.TILE_PIXELS), (int)(currentSprite.y * Game.TILE_PIXELS), null);
 			} 
 		}
 		g.dispose();
@@ -60,8 +75,12 @@ public class ScreenRenderer {
 		tilesViewedY = Game.getFrames()[0].getHeight()/Game.TILE_PIXELS + 1;
 	}
 	
-	void forceLayerUpdate(int layerIndex) {
+	void forceLayerUpdate(int layerIndex, boolean renderAllSprites) {
 		updateFrameRegion();
-		layers[layerIndex] = renderSprites(layerIndex);
+		if(renderAllSprites) {
+			layers[layerIndex] = renderAllSprites(layerIndex);
+		} else {
+			layers[layerIndex] = renderViewedSprites(layerIndex);
+		}
 	}
 }

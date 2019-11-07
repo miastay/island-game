@@ -35,7 +35,7 @@ public class Game extends JFrame {
 	
 	public static BufferedImage currentFrame;
 	public static int currentFPS;
-	public static boolean showDebug;
+	public static boolean showDebug = true;
 	
 	public Game() {
 		Game.objects++;
@@ -58,7 +58,7 @@ public class Game extends JFrame {
 			keylist.addKey(KeyEvent.VK_F1);
 		keylist.StartKeyListener();
 		
-		renderer.forceLayerUpdate(0);
+		renderer.forceLayerUpdate(0, true);
 		currentFrame = renderer.outputAllLayers();
 		FrameLoop();
 	}

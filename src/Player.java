@@ -123,18 +123,11 @@ public class Player implements Updateable {
 	public void update() {
 		updateHitbox();
 		checkKeys();
-		
-		boolean needRedraw = false;
 		if(getX() > Game.renderer.tilesViewedX / 2 && getX() < Map.baseArray.length - Game.renderer.tilesViewedX / 2) {
 			Game.renderer.cameraLocalX = getX() - Game.renderer.tilesViewedX / 2;
-			needRedraw = true;
 		}
 		if(getY() > Game.renderer.tilesViewedY / 2 && getY() < Map.baseArray[0].length - Game.renderer.tilesViewedY / 2) {
 			Game.renderer.cameraLocalY = getY() - Game.renderer.tilesViewedY / 2;
-			needRedraw = true;
-		}
-		if(needRedraw) {
-			Game.renderer.forceLayerUpdate(0);
 		}
 	}
 }
