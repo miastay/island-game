@@ -32,7 +32,6 @@ public class ScreenRenderer {
 		if(Game.showFPS) {
 			g.setColor(Color.RED);
 			g.drawString(Game.currentFPS + "fps", 150, 40);
-			g.drawString(Game.player.getX() + "x", 150, 80);
 		}
 		
 		g.dispose();
