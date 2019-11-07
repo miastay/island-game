@@ -2,8 +2,6 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.Renderer;
-
 public class Player implements Updateable {
 
 	private float speed = 3;
@@ -11,7 +9,6 @@ public class Player implements Updateable {
 	Rectangle2D.Float hitbox;
 		private float width, height;
 		private boolean isColliding;
-	private boolean renderHitbox = true;
 	private String name;
 	private Sprite playerSprite;
 	private float x, y;

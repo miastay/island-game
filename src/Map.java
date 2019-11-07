@@ -43,7 +43,7 @@ public class Map {
 			    	Tile t;
 			    	if(data[i].equals("water")) {
 			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9"};
-			    		t = new Tile(s, i, j, 2);
+			    		t = new Tile(s, i, j, 2, 1);
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
@@ -56,6 +56,8 @@ public class Map {
 			    j++;
 			}
 			csvReader.close();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -86,6 +88,38 @@ public class Map {
 			e.printStackTrace();
 		}
 		
+		findShore();
+		
+	}
+	
+	void findShore(){
+		for(Tile[] array : baseArray) {
+			for(Tile t : array) {
+				if(t.tileSprite.renderLayer == 1) {
+					if(tileIsShoreline(t)) {
+						collisionTiles.add(t);
+					}
+				}
+			}
+		}
+	}
+	
+	boolean tileIsShoreline(Tile t) {
+		boolean isShore = false;
+		for(int x = t.getX() - 1; x < t.getX() + 2; x++) {
+			for(int y = t.getY() - 1; y < t.getY() + 2; y++) {
+				if(x >= 0 && x < baseArray.length && y >= 0 && y < baseArray[x].length) {
+					if(baseArray[x][y].tileSprite.renderLayer != 1 && (x != t.getX() || y != t.getY())) {
+						isShore = true;
+						break;
+					}
+				}
+			}
+			if(isShore) {
+				break;
+			}
+		}
+		return isShore;
 	}
 
 }

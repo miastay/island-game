@@ -1,6 +1,6 @@
 public class Tile implements Updateable{
 	
-	private Sprite tileSprite;
+	Sprite tileSprite;
 	private String name;		//reference for ResourceHandler
 	private String[] frames;	//used for animated tiles
         private float frameRate;
@@ -15,8 +15,8 @@ public class Tile implements Updateable{
 		NONE
 	}
 
-	float getX() {return x;}
-	float getY() {return y;}
+	int getX() {return x;}
+	int getY() {return y;}
 	String getName() {return name;}
 	
 	public enum Type {
@@ -34,7 +34,7 @@ public class Tile implements Updateable{
 		Game.renderer.addSprite(tileSprite);
 		
 	}
-	public Tile(String[] names, int x, int y, float frameRate) {
+	public Tile(String[] names, int x, int y, float frameRate, int layer) {
 		this.frames = names;
 		this.x = x;
 		this.y = y;
@@ -45,7 +45,7 @@ public class Tile implements Updateable{
         this.frameRate = frameRate;
         lastFrameMillis = System.currentTimeMillis();
         
-        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, 1);
+        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, layer);
 		Game.renderer.addSprite(tileSprite);
 	}
 	public void update() {
