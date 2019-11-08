@@ -1,4 +1,7 @@
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -36,6 +39,9 @@ public class Game extends JFrame {
 	public static int currentFPS;
 	public static boolean showDebug = true;
 	
+	public static JInternalFrame uiFrame;
+		public static JButton uiButton;
+	
 	public Game() {
 		Game.objects++;
 		resGrab = new ResourceHandler();
@@ -44,7 +50,8 @@ public class Game extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		
+	
+		createInternalFrame();
 		
 		map = new Map();
 		
@@ -133,5 +140,17 @@ public class Game extends JFrame {
 		if(o instanceof Tile) {
 			tiles.add((Tile) o);
 		}
+	}
+	private void createInternalFrame() {
+		
+		uiFrame = new JInternalFrame();
+		uiButton = new JButton("label");
+		uiButton.setPreferredSize(new Dimension(250, 100));
+		uiFrame.add(uiButton);
+		uiFrame.setMaximumSize(new Dimension(100, 600));
+		uiFrame.setResizable(false);
+		uiFrame.setBorder(null);
+		add(uiFrame);
+		uiFrame.setVisible(true);
 	}
 }

@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -28,18 +30,22 @@ public class ScreenRenderer {
 		BufferedImage finalFrame = new BufferedImage(tilesViewedX * (int)(Game.TILE_PIXELS / cameraScale), tilesViewedY * (int)(Game.TILE_PIXELS / cameraScale), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = finalFrame.createGraphics();
 		g.scale(1 / cameraScale, 1 / cameraScale);
+		Game.uiFrame.pack();
+		Game.uiFrame.setLocation(500, 500);
+		Game.uiFrame.repaint();
 		for(int i = 0; i < layers.length; i++) {
 			layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
 			g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
 			//g.drawImage(layers[i], 0, 0, null);
 		}
+
 		
 		if(Game.showDebug) {
 			g.setColor(Color.RED);
 			g.drawString(Game.currentFPS + "fps", 150, 40);
 			g.drawString("Tiles: " + tilesViewedX + " , " + tilesViewedY, 150, 80);
 		}
-		
+
 		g.dispose();
 		return finalFrame;
 	}
