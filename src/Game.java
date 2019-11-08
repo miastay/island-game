@@ -43,6 +43,7 @@ public class Game extends JFrame {
 		setUndecorated(isTrueFullScreen);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		
 		
 		map = new Map();

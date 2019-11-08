@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player implements Updateable {
 
-	private float speed = 10;
+	private float speed = 5;
 	
 	Rectangle2D.Float hitbox;
 		private float width, height;
