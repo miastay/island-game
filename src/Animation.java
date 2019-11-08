@@ -7,6 +7,7 @@ public class Animation {
 	Animation defaultExit;
 	
 	Animation(String[] frames, float frameRate){
+		this.frames = new BufferedImage[frames.length];
 		for(int i = 0; i < frames.length; i++) {
 			this.frames[i] = ResourceHandler.getImageFromKey(frames[i]);
 		}

@@ -1,9 +1,8 @@
 public class Tile implements Updateable{
 	
 	Sprite tileSprite;
-	private String name;		//reference for ResourceHandler
-	private String[] frames;	//used for animated tiles
-        private float frameRate;
+	private String spriteName;	//reference for ResourceHandler
+	private Animation tileAnim;	//used for animated tiles
         private int currentFrame;
         private long lastFrameMillis;
 	private final int x, y;
@@ -17,47 +16,49 @@ public class Tile implements Updateable{
 
 	int getX() {return x;}
 	int getY() {return y;}
-	String getName() {return name;}
+	String getName() {return spriteName;}
 	
 	public enum Type {
 		ANIMATED,
 		STATIC;
 	}
 
-	public Tile(String name, int x, int y, int layer) {
-		this.name = name;
+	public Tile(String spriteName, int x, int y, int layer) {
+		this.spriteName = spriteName;
 		this.x = x;
 		this.y = y;
 		Game.objects++;
 		type = Type.STATIC;
-		tileSprite = new Sprite(ResourceHandler.getImageFromKey(name), x, y, 1, layer);
+		tileSprite = new Sprite(ResourceHandler.getImageFromKey(spriteName), x, y, 1, layer);
 		Game.renderer.addSprite(tileSprite);
 		
 	}
-	public Tile(String[] names, int x, int y, float frameRate, int layer) {
-		this.frames = names;
+	public Tile(Animation tileAnim, int x, int y, int layer) {
+		this.tileAnim = tileAnim;
 		this.x = x;
 		this.y = y;
 		Game.objects++;
 		type = Type.ANIMATED;
                                 
         currentFrame = 0;
-        this.frameRate = frameRate;
         lastFrameMillis = System.currentTimeMillis();
         
-        tileSprite = new Sprite(ResourceHandler.getImageFromKey(names[0]), x, y, 1, layer);
+        tileSprite = new Sprite(tileAnim.frames[0], (float)x, (float)y, 1.0f, layer);
 		Game.renderer.addSprite(tileSprite);
 	}
 	public void update() {
 		if(type == Type.ANIMATED) {
-            if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / frameRate){
-                    currentFrame = (currentFrame == frames.length - 1) ? 0 : currentFrame + 1;
-                    tileSprite.image = ResourceHandler.getImageFromKey(frames[currentFrame]);
-                    lastFrameMillis = System.currentTimeMillis();
-            }
+            animate();
 		} else {
-			tileSprite.image = ResourceHandler.getImageFromKey(name);
+			tileSprite.image = ResourceHandler.getImageFromKey(spriteName);
 		}
 	}
 	
+	void animate() {
+		if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / tileAnim.frameRate){
+            currentFrame = (currentFrame == tileAnim.frames.length - 1) ? 0 : currentFrame + 1;
+            tileSprite.image = tileAnim.frames[currentFrame];
+            lastFrameMillis = System.currentTimeMillis();
+		}
+	}
 }
