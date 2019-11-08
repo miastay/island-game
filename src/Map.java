@@ -42,8 +42,7 @@ public class Map {
 			    for(int i = 0; i < data.length; i++) {
 			    	Tile t;
 			    	if(data[i].equals("water")) {
-			    		String[] s = {"water1","water2","water3","water4","water5","water6","water7","water8","water9"};
-			    		Animation a = new Animation(s, 2.0f);
+			    		Animation a = new Animation("water", 2.0f);
 			    		t = new Tile(a, i, j, 1);
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j, 0);

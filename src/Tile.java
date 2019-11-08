@@ -43,7 +43,7 @@ public class Tile implements Updateable{
         currentFrame = 0;
         lastFrameMillis = System.currentTimeMillis();
         
-        tileSprite = new Sprite(tileAnim.frames[0], (float)x, (float)y, 1.0f, layer);
+        tileSprite = new Sprite(ResourceHandler.getAnimationFromKey(tileAnim.frames)[0], (float)x, (float)y, 1.0f, layer);
 		Game.renderer.addSprite(tileSprite);
 	}
 	public void update() {
@@ -56,8 +56,8 @@ public class Tile implements Updateable{
 	
 	void animate() {
 		if((System.currentTimeMillis() - lastFrameMillis) / 1000f > 1 / tileAnim.frameRate){
-            currentFrame = (currentFrame == tileAnim.frames.length - 1) ? 0 : currentFrame + 1;
-            tileSprite.image = tileAnim.frames[currentFrame];
+            currentFrame = (currentFrame == ResourceHandler.getAnimationFromKey(tileAnim.frames).length - 1) ? 0 : currentFrame + 1;
+            tileSprite.image = ResourceHandler.getAnimationFromKey(tileAnim.frames)[currentFrame];
             lastFrameMillis = System.currentTimeMillis();
 		}
 	}

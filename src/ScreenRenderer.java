@@ -9,7 +9,7 @@ public class ScreenRenderer {
 	
 	public float cameraLocalX = 0.0f;
 	public float cameraLocalY = 0.0f;
-	public float cameraScale = 0.5f;
+	public float cameraScale = 1.0f;
 	
 	public int tilesViewedX;
 	public int tilesViewedY;
