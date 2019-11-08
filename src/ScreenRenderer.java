@@ -46,7 +46,7 @@ public class ScreenRenderer {
 	
 	
 	BufferedImage renderViewedSprites(int layerIndex) {
-		BufferedImage currentLayer = new BufferedImage(Game.map.baseArray.length * Game.TILE_PIXELS, Game.map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage currentLayer = new BufferedImage(Map.baseArray.length * Game.TILE_PIXELS, Map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Rectangle2D.Float screenRect = new Rectangle.Float(cameraLocalX, cameraLocalY, tilesViewedX, tilesViewedY);
 		Graphics2D g = currentLayer.createGraphics();
 		for(Sprite currentSprite : sprites) {
@@ -62,7 +62,7 @@ public class ScreenRenderer {
 	}
 	
 	BufferedImage renderAllSprites(int layerIndex) {
-		BufferedImage currentLayer =  new BufferedImage(Game.map.baseArray.length * Game.TILE_PIXELS, Game.map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage currentLayer =  new BufferedImage(Map.baseArray.length * Game.TILE_PIXELS, Map.baseArray[0].length * Game.TILE_PIXELS, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = currentLayer.createGraphics();
 		for(Sprite currentSprite : sprites) {
 			if(currentSprite.renderLayer == layerIndex) {

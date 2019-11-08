@@ -7,7 +7,7 @@ public class Tile implements Updateable{
         private long lastFrameMillis;
 	private final int x, y;
 	public final Type type;
-	private Contact contactType = Contact.NONE;
+	Contact contactType = Contact.NONE;
 	
 	public static enum Contact {
 		COLLIDE,

@@ -1,4 +1,3 @@
-import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,6 +10,7 @@ public class Map {
 	public static Tile[][] overlayArray = new Tile[56][52];
 	File baseLocation, overlayLocation;
 	public static List<Tile> collisionTiles = new ArrayList<Tile>();
+	public static List<CollisionWall> collisionWalls = new ArrayList<CollisionWall>();
 	
 	public Map() {
 		baseLocation = Game.mapLocation;
@@ -47,8 +47,10 @@ public class Map {
 			    	} else {
 			    		t = new Tile(data[i] + "", i, j, 0);
 			    	}
-			    	if(data[i].equals("tree-grass"))
-			    		collisionTiles.add(t);
+			    	if(data[i].equals("tree-grass")) {
+			    		t.contactType = Tile.Contact.COLLIDE;
+			    		Map.collisionTiles.add(t);
+			    	}
 //			    	Game.addNewInstance(t);
 			    	baseArray[i][j] = t;
 			    	Game.activeObjects.add(t);
@@ -96,15 +98,32 @@ public class Map {
 		for(Tile[] array : baseArray) {
 			for(Tile t : array) {
 				if(t.tileSprite.renderLayer == 1) {
-					if(tileIsShoreline(t)) {
-						collisionTiles.add(t);
+					if(t.getY() != 0) {
+						if(baseArray[t.getX()][t.getY() - 1].tileSprite.renderLayer != 1) {
+							Map.collisionWalls.add(new CollisionWall(t.getX(), t.getY(), 1, CollisionWall.Orientation.HORIZONTAL));
+						}
+					}
+					if(t.getY() != baseArray[0].length - 1) {
+						if(baseArray[t.getX()][t.getY() + 1].tileSprite.renderLayer != 1) {
+							Map.collisionWalls.add(new CollisionWall(t.getX(), t.getY() + 1, 1, CollisionWall.Orientation.HORIZONTAL));
+						}
+					}
+					if(t.getX() != 0) {
+						if(baseArray[t.getX() - 1][t.getY()].tileSprite.renderLayer != 1) {
+							Map.collisionWalls.add(new CollisionWall(t.getX(), t.getY(), 1, CollisionWall.Orientation.VERTICAL));
+						}
+					}
+					if(t.getX() != baseArray.length - 1) {
+						if(baseArray[t.getX() + 1][t.getY()].tileSprite.renderLayer != 1) {
+							Map.collisionWalls.add(new CollisionWall(t.getX() + 1, t.getY(), 1, CollisionWall.Orientation.VERTICAL));
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	boolean tileIsShoreline(Tile t) {
+	/*boolean tileIsShoreline(Tile t) {
 		boolean isShore = false;
 		for(int x = t.getX() - 1; x < t.getX() + 2; x++) {
 			for(int y = t.getY() - 1; y < t.getY() + 2; y++) {
@@ -120,6 +139,6 @@ public class Map {
 			}
 		}
 		return isShore;
-	}
+	}*/
 
 }

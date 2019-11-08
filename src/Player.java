@@ -20,8 +20,6 @@ public class Player implements Updateable {
 	void setX(float x) {this.x = x; playerSprite.x = x;}
 	void setY(float y) {this.y = y; playerSprite.y = y;}
 	
-	private float lastX, oldestX, lastY, oldestY;
-	
 	public Player(String name) {
 		this.name = name;
 		playerSprite = new Sprite(ResourceHandler.getImageFromKey(name), 0, 0, 1, 1);
@@ -56,10 +54,6 @@ public class Player implements Updateable {
 	}
 	private void checkKeys() {
 		if(canControl && !isColliding) {
-			oldestX = lastX;
-			oldestY = lastY;
-			lastX = getX();
-			lastY = getY();
 			
 			float movementX = 0.0f;
 			float movementY = 0.0f;
@@ -84,11 +78,11 @@ public class Player implements Updateable {
 			
 				if(movementBox.intersects(item.hitbox)){
 					if(movementBoxX.intersects(item.hitbox)) {
-						setX(movementX > 0 ? item.getX() - hitbox.width : item.getX() + item.hitbox.width);
+						setX(getX() < item.getX() ? item.getX() - hitbox.width : item.getX() + item.hitbox.width);
 						movementX = 0;
 					}
 					if(movementBoxY.intersects(item.hitbox)) {
-						setY(movementY > 0 ? item.getY() - hitbox.height : item.getY() + item.hitbox.height);
+						setY(getY() < item.getY() ? item.getY() - hitbox.height : item.getY() + item.hitbox.height);
 						movementY = 0;
 					}
 				}
@@ -97,15 +91,39 @@ public class Player implements Updateable {
 				Rectangle2D.Float tileBox = new Rectangle.Float(tile.getX(), tile.getY(), 1.0f, 1.0f);
 				if(movementBox.intersects(tileBox)){
 					if(movementBoxX.intersects(tileBox)) {
-						setX(movementX > 0 ? tile.getX() - hitbox.width - 1.0f / Game.TILE_PIXELS : tile.getX() + tileBox.width);
+						setX(getX() < tile.getX() ? tile.getX() - hitbox.width - 1.0f / Game.TILE_PIXELS : tile.getX() + tileBox.width);
 						movementX = 0;
 					}
 					if(movementBoxY.intersects(tileBox)) {
-						setY(movementY > 0 ? tile.getY() - hitbox.height - 1.0f / Game.TILE_PIXELS : tile.getY() + tileBox.height);
+						setY(getY() < tile.getY() ? tile.getY() - hitbox.height - 1.0f / Game.TILE_PIXELS : tile.getY() + tileBox.height);
 						movementY = 0;
 					}
 				}
 			}
+			for(CollisionWall wall : Map.collisionWalls) {
+				if(wall.orientaion == CollisionWall.Orientation.VERTICAL) {
+					if(getY() + hitbox.height > wall.y && getY() < wall.y + wall.length) {
+						if(movementX > 0 && getX() + hitbox.width <= wall.x && getX() + movementX + hitbox.width > wall.x) {
+							movementX = 0;
+							setX(wall.x - hitbox.width); 
+						} else if(movementX < 0 && getX() >= wall.x && getX() + movementX < wall.x){
+							movementX = 0;
+							setX(wall.x);
+						}
+					}
+				} else if (wall.orientaion == CollisionWall.Orientation.HORIZONTAL) {
+					if(getX() + hitbox.width > wall.x && getX() < wall.x + wall.length) {
+						if(movementY > 0 && getY() + hitbox.height <= wall.y && getY() + movementY + hitbox.height > wall.y) {
+							movementY = 0;
+							setY(wall.y - hitbox.height); 
+						} else if(movementY < 0 && getY() >= wall.y && getY() + movementY < wall.y){
+							movementY = 0;
+							setY(wall.y);
+						}
+					}
+				}
+			}
+			
 			if(movementX != 0 && movementY != 0) {
 				movementX *= 1 / Math.sqrt(2);
 				movementY *= 1 / Math.sqrt(2);
@@ -116,9 +134,9 @@ public class Player implements Updateable {
 		}
 	}
 	
-	private float dist(float x1, float y1, float x2, float y2) {
+	/*private float dist(float x1, float y1, float x2, float y2) {
 		return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	}
+	}*/
 	
 	public void update() {
 		updateHitbox();

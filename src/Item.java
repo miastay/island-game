@@ -5,7 +5,6 @@ public class Item implements Updateable {
 	
 	Rectangle2D.Float hitbox;
 	private Sprite sprite;
-	private boolean renderHitbox = true;
 	private String name;
 	private float x, y;
 	private float width, height;
