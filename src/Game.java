@@ -129,7 +129,7 @@ public class Game extends JFrame {
 		        updateVars();
 			}
 			
-		}, new Date(), 10);
+		}, new Date(), 1);
 	}
 	
 	
@@ -140,7 +140,7 @@ public class Game extends JFrame {
 			}
 			
 			currentFrame = renderer.outputAllLayers();
-			if(FRAME % 60 == 1)
+			if(FRAME % 30 == 1)
 				currentFPS = (int)(1 / deltaTime);
 			if(keylist.getKey(KeyEvent.VK_F1)) {
 				showDebug = !showDebug;
@@ -182,6 +182,13 @@ public class Game extends JFrame {
 		uiFrame = new JInternalFrame();
 		
 			resumeButton = new JButton("Resume");
+				resumeButton.addActionListener(new ActionListener()
+				{
+					  public void actionPerformed(ActionEvent e)
+					  {
+					    uiFrame.setVisible(false);
+					  }
+				});
 //			resumeButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
 			optionsButton = new JButton("Settings");
 //			optionsButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
