@@ -2,6 +2,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -42,12 +45,17 @@ public class Game extends JFrame {
 	public static boolean showDebug = true;
 	
 	public static JInternalFrame uiFrame;
-		public static JButton uiButton;
+		public static JButton resumeButton;
+		public static JButton optionsButton;
+		public static JButton exitButton;
+	public static int UI_FRAME_SCALE = 10;
+	public static boolean isMenuShown;
 	
 	public Game() {
 		Game.objects++;
 		resGrab = new ResourceHandler();
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+//		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setUndecorated(isTrueFullScreen);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,12 +180,31 @@ public class Game extends JFrame {
 	private void createInternalFrame() {
 		
 		uiFrame = new JInternalFrame();
-		uiButton = new JButton("label");
-		uiButton.setPreferredSize(new Dimension(250, 100));
-		uiFrame.add(uiButton);
-		uiFrame.setMaximumSize(new Dimension(100, 600));
+		
+			resumeButton = new JButton("Resume");
+//			resumeButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+			optionsButton = new JButton("Settings");
+//			optionsButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+				optionsButton.addActionListener(new ActionListener()
+				{
+					  public void actionPerformed(ActionEvent e)
+					  {
+					    System.exit(0);
+					  }
+				});
+			exitButton = new JButton("Exit");
+//			exitButton.setMinimumSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+				exitButton.addActionListener(new ActionListener()
+				{
+					  public void actionPerformed(ActionEvent e)
+					  {
+					    System.exit(0);
+					  }
+				});
+		uiFrame.add(resumeButton); uiFrame.add(optionsButton); uiFrame.add(exitButton);
 		uiFrame.setResizable(false);
 		uiFrame.setBorder(null);
+		uiFrame.setLayout(new BoxLayout(uiFrame.getContentPane(), BoxLayout.Y_AXIS));
 		add(uiFrame);
 		uiFrame.setVisible(true);
 	}

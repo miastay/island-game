@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class ScreenRenderer {
 		Graphics2D g = finalFrame.createGraphics();
 		g.scale(1 / cameraScale, 1 / cameraScale);
 		Game.uiFrame.pack();
-		Game.uiFrame.setLocation(500, 500);
+		Game.uiFrame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width/2)-(Game.UI_FRAME_SCALE*25/2), (Toolkit.getDefaultToolkit().getScreenSize().height/3));
 		Game.uiFrame.repaint();
 		for(int i = 0; i < layers.length; i++) {
 			layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
