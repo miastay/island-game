@@ -23,9 +23,11 @@ public class KeyboardListener {
                         switch(e.getID()){
                             case KeyEvent.KEY_PRESSED:
                                 keysDown.put(e.getKeyCode(), true);
+                                System.out.println("Key pressed: " + e.getKeyCode());
                                 return true;
                             case KeyEvent.KEY_RELEASED:
                                 keysDown.put(e.getKeyCode(), false);
+                                System.out.println("Key released: " + e.getKeyCode());
                                 return true;
                         }
                     }

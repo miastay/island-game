@@ -10,7 +10,9 @@ import java.io.File;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimerTask;
 
 public class Game extends JFrame {
 
@@ -67,7 +69,8 @@ public class Game extends JFrame {
 		
 		renderer.forceLayerUpdate(0, true);
 		currentFrame = renderer.outputAllLayers();
-		FrameLoop();
+		//FrameLoop();
+		startFrameTimer();
 		
 		this.setFocusable(true);
 		this.requestFocus();
@@ -94,6 +97,31 @@ public class Game extends JFrame {
 		Instantiate(player = new Player("crystal", 7, 13));
 		Instantiate(new Item("crystal", 5, 5));
 
+	}
+	
+	
+	public void startFrameTimer() {
+		java.util.Timer timer = new java.util.Timer();
+		
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				for(Updateable obj : activeObjects) {
+					obj.update();
+				}
+				
+				currentFrame = renderer.outputAllLayers();
+				if(FRAME % 60 == 1)
+					currentFPS = (int)(1 / deltaTime);
+				if(keylist.getKey(KeyEvent.VK_F1)) {
+					showDebug = !showDebug;
+				}
+				repaint();
+		        updateVars();
+			}
+			
+		}, new Date(), 10);
 	}
 	
 	
