@@ -115,6 +115,7 @@ public class Game extends JFrame {
 
 			@Override
 			public void run() {
+				keylist.update();
 				for(Updateable obj : activeObjects) {
 					obj.update();
 				}
@@ -122,7 +123,7 @@ public class Game extends JFrame {
 				currentFrame = renderer.outputAllLayers();
 				if(FRAME % 60 == 1)
 					currentFPS = (int)(1 / deltaTime);
-				if(keylist.getKey(KeyEvent.VK_F1)) {
+				if(keylist.getKeyDown(KeyEvent.VK_F1)) {
 					showDebug = !showDebug;
 				}
 				repaint();
