@@ -36,23 +36,25 @@ public class ScreenRenderer {
 		if(Game.isMenuShown) {
 			Game.uiFrame.setSize(new Dimension(30*Game.UI_FRAME_SCALE, 18*Game.UI_FRAME_SCALE));
 			Game.uiFrame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width/2)-(Game.UI_FRAME_SCALE*30/2), (Toolkit.getDefaultToolkit().getScreenSize().height/3));
-			Game.uiFrame.repaint();
-			Game.uiFrame.setVisible(true);
+				Game.uiFrame.repaint();
+				Game.uiFrame.setVisible(true);
 			for(int i = 0; i < layers.length; i++) {
 				layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
 				g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
-				//g.drawImage(layers[i], 0, 0, null);
 			}
 		} else {
-			for(int i = 0; i < layers.length; i++) {
-				layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
-				g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
-				//g.drawImage(layers[i], 0, 0, null);
-			}
+//			for(int i = 0; i < layers.length; i++) {
+//				layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
+//				g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
+//				//g.drawImage(layers[i], 0, 0, null);
+//			}
 			Game.uiFrame.setVisible(false);
 			updateFrameRegion();
 		}
-		
+		for(int i = 0; i < layers.length; i++) {
+			layers[i] = !layersStatic[i] ? renderViewedSprites(i) : layers[i];
+			g.drawImage(layers[i], (int)(-cameraLocalX * Game.TILE_PIXELS), (int)(-cameraLocalY * Game.TILE_PIXELS), null);
+		}
 
 		
 		if(Game.showDebug) {
