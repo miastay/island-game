@@ -73,11 +73,12 @@ public class Game extends JFrame {
 		createComponents();
 			//for debug screen
 			keylist.addKey(KeyEvent.VK_F1);
+			//for menu
+			keylist.addKey(KeyEvent.VK_ESCAPE);
 		keylist.StartKeyListener();
 		
 		renderer.forceLayerUpdate(0, true);
 		currentFrame = renderer.outputAllLayers();
-		//FrameLoop();
 		startFrameTimer();
 		
 		this.setFocusable(true);
@@ -126,29 +127,14 @@ public class Game extends JFrame {
 				if(keylist.getKeyDown(KeyEvent.VK_F1)) {
 					showDebug = !showDebug;
 				}
+				if(keylist.getKeyDown(KeyEvent.VK_ESCAPE)) {
+					isMenuShown = !isMenuShown;
+				}
 				repaint();
 		        updateVars();
 			}
 			
 		}, new Date(), 1);
-	}
-	
-	
-	public void FrameLoop() {
-		while(true) {
-			for(Updateable obj : activeObjects) {
-				obj.update();
-			}
-			
-			currentFrame = renderer.outputAllLayers();
-			if(FRAME % 30 == 1)
-				currentFPS = (int)(1 / deltaTime);
-			if(keylist.getKey(KeyEvent.VK_F1)) {
-				showDebug = !showDebug;
-			}
-			repaint();
-	        updateVars();
-		}
 	}
 	
 	public void paint(Graphics G) {
@@ -187,12 +173,12 @@ public class Game extends JFrame {
 				{
 					  public void actionPerformed(ActionEvent e)
 					  {
-					    uiFrame.setVisible(false);
+					    isMenuShown = !isMenuShown;
 					  }
 				});
-//			resumeButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+			resumeButton.setMaximumSize(new Dimension(30*UI_FRAME_SCALE, 6*UI_FRAME_SCALE));
 			optionsButton = new JButton("Settings");
-//			optionsButton.setPreferredSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+			optionsButton.setMaximumSize(new Dimension(30*UI_FRAME_SCALE, 6*UI_FRAME_SCALE));
 				optionsButton.addActionListener(new ActionListener()
 				{
 					  public void actionPerformed(ActionEvent e)
@@ -201,7 +187,7 @@ public class Game extends JFrame {
 					  }
 				});
 			exitButton = new JButton("Exit");
-//			exitButton.setMinimumSize(new Dimension(25*UI_FRAME_SCALE, 10*UI_FRAME_SCALE));
+			exitButton.setMaximumSize(new Dimension(30*UI_FRAME_SCALE, 6*UI_FRAME_SCALE));
 				exitButton.addActionListener(new ActionListener()
 				{
 					  public void actionPerformed(ActionEvent e)
