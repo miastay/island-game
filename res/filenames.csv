@@ -12,3 +12,6 @@ grassy,grassy.png,sprite
 tree-1,tree-1.png,sprite
 sand-1,sand-1.png,sprite
 sand-2,sand-2.png,sprite
+player-front,player-front.png,sprite
+player-back,player-back.png,sprite
+player-left,player-left.png,sprite
