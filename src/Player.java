@@ -1,8 +1,6 @@
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Player implements Updateable {
 
@@ -15,14 +13,21 @@ public class Player implements Updateable {
 	private Sprite playerSprite;
 	private float x, y;
 	
-	private static List<Item> inventory = new ArrayList<Item>();
-	
 	public boolean canControl = true;
 	
 	float getX() {return x;}
 	float getY() {return y;}
 	void setX(float x) {this.x = x; playerSprite.x = x;}
 	void setY(float y) {this.y = y; playerSprite.y = y;}
+	
+	public Player(String name) {
+		this.name = name;
+		playerSprite = new Sprite(ResourceHandler.getImageFromKey(name), 0, 0, 1, 1);
+		setHitbox();
+		Game.objects++;
+		instantiateKeys();
+		Game.renderer.addSprite(playerSprite);
+	}
 	
 	public Player(String name, float x, float y) {
 		this.name = name;
@@ -32,8 +37,6 @@ public class Player implements Updateable {
 		Game.objects++;
 		instantiateKeys();
 		Game.renderer.addSprite(playerSprite);
-		
-		inventory.add(Game.items.get(0));
 	}
 	private void instantiateKeys() {
 		Game.keylist.addKey(KeyEvent.VK_A);
@@ -42,8 +45,8 @@ public class Player implements Updateable {
 		Game.keylist.addKey(KeyEvent.VK_D);
 	}
 	private void setHitbox() {
-		width = (ResourceHandler.getImageFromKey(name).getWidth() + 0f) / Game.TILE_PIXELS;
-		height = (ResourceHandler.getImageFromKey(name).getHeight() + 0f) / Game.TILE_PIXELS;
+		width = (ResourceHandler.getImageFromKey(name).getWidth() + 0f ) / Game.TILE_PIXELS;
+		height = (ResourceHandler.getImageFromKey(name).getHeight() + 0f ) / Game.TILE_PIXELS;
 		hitbox = new Rectangle.Float(getX(), getY(), width, height);
 	}
 	private void updateHitbox() {

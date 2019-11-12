@@ -103,9 +103,9 @@ public class Game extends JFrame {
 		 * Create all components
 		 * Player has to come first
 		 */
-		
-		Instantiate(new Item("crystal", 5, 5));
 		Instantiate(player = new Player("crystal", 7, 13));
+		Instantiate(new Item("crystal", 5, 5));
+
 	}
 	
 	
@@ -117,10 +117,8 @@ public class Game extends JFrame {
 			@Override
 			public void run() {
 				keylist.update();
-				if(!isMenuShown) {
-					for(Updateable obj : activeObjects) {
-						obj.update();
-					}
+				for(Updateable obj : activeObjects) {
+					obj.update();
 				}
 				
 				currentFrame = renderer.outputAllLayers();
