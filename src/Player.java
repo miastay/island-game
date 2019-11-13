@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 public class Player implements Updateable {
 
 	private float speed = 5;
-	
 	Rectangle2D.Float hitbox;
 		private float width, height;
 		private boolean isColliding;
@@ -19,15 +18,6 @@ public class Player implements Updateable {
 	float getY() {return y;}
 	void setX(float x) {this.x = x; playerSprite.x = x;}
 	void setY(float y) {this.y = y; playerSprite.y = y;}
-	
-	public Player(String name) {
-		this.name = name;
-		playerSprite = new Sprite(ResourceHandler.getImageFromKey(name), 0, 0, 1, 1);
-		setHitbox();
-		Game.objects++;
-		instantiateKeys();
-		Game.renderer.addSprite(playerSprite);
-	}
 	
 	public Player(String name, float x, float y) {
 		this.name = name;
@@ -133,11 +123,6 @@ public class Player implements Updateable {
 			setY(getY() + movementY);
 		}
 	}
-	
-	/*private float dist(float x1, float y1, float x2, float y2) {
-		return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	}*/
-	
 	public void update() {
 		updateHitbox();
 		checkKeys();

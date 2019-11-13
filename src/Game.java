@@ -103,7 +103,7 @@ public class Game extends JFrame {
 		 * Create all components
 		 * Player has to come first
 		 */
-		Instantiate(player = new Player("crystal", 7, 13));
+		Instantiate(player = new Player("player-front", 7, 13));
 		Instantiate(new Item("crystal", 5, 5));
 
 	}
