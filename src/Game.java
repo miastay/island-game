@@ -130,7 +130,9 @@ public class Game extends JFrame {
 				if(keylist.getKeyDown(KeyEvent.VK_ESCAPE)) {
 					isMenuShown = !isMenuShown;
 				}
+				setBounds(0,0,Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
 				repaint();
+				setBounds(0,0,Toolkit.getDefaultToolkit().getScreenSize().width+1, Toolkit.getDefaultToolkit().getScreenSize().height+1);
 		        updateVars();
 			}
 			
